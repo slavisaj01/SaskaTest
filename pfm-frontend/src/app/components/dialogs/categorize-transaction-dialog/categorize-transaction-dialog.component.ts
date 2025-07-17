@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit,ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CategoryService } from '../../../services/category.service';
 import { Category } from '../../../models/category';
@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-
 @Component({
   selector: 'app-categorize-transaction-dialog',
   standalone: true,
@@ -20,7 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule
   ],
   templateUrl: './categorize-transaction-dialog.component.html',
-  styleUrl: './categorize-transaction-dialog.component.scss'
+  styleUrl: './categorize-transaction-dialog.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CategorizeTransactionDialogComponent implements OnInit {
   allCategories: Category[] = [];

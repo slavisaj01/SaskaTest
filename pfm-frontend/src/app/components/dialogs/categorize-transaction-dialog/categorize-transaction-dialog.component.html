@@ -1,30 +1,41 @@
-<h2 mat-dialog-title>Add category</h2>
+<div class="dialog-container">
+  <h2 mat-dialog-title>Add category</h2>
 
-<mat-dialog-content>
-  <p>Please choose category for this transaction:</p>
+  <mat-dialog-content>
+    <p class="dialog-description">Please choose category for this transaction:</p>
 
-  <!-- Kategorija -->
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Choose category</mat-label>
-    <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategoryChange()">
-      @for (cat of parentCategories; track cat.id) {
-        <mat-option [value]="cat">{{ cat.name }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+    <!-- Kategorija -->
+    <mat-form-field appearance="fill" class="styled-field full-width">
+      <mat-label>Choose category</mat-label>
+      <mat-select
+        [panelClass]="'category-select-panel'"
+        [(ngModel)]="selectedCategory"
+        (selectionChange)="onCategoryChange()">
+        <mat-option
+          *ngFor="let cat of parentCategories"
+          class="category-select-option"
+          [value]="cat">
+          {{ cat.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Subkategorija -->
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Choose subcategory (optional)</mat-label>
-    <mat-select [(ngModel)]="selectedSubcategory" [disabled]="subcategories.length === 0">
-      @for (sub of subcategories; track sub.id) {
-        <mat-option [value]="sub.name">{{ sub.name }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-</mat-dialog-content>
+    <!-- Subkategorija -->
+    <mat-form-field appearance="fill" class="full-width styled-field">
+      <mat-label>Choose subcategory (optional)</mat-label>
+      <mat-select
+        [(ngModel)]="selectedSubcategory"
+        [disabled]="subcategories.length === 0"
+        panelClass="category-select-panel">
+        @for (sub of subcategories; track sub.id) {
+          <mat-option class="category-select-option" [value]="sub.name">{{ sub.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="onApply()">Apply</button>
-</mat-dialog-actions>
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button class="btn-secondary" (click)="onCancel()">Cancel</button>
+    <button class="btn-primary" (click)="onApply()">Apply</button>
+  </mat-dialog-actions>
+</div>

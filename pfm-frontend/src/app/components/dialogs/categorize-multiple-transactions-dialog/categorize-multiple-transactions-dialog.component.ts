@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from '../../../services/category.service';
 import { Category } from '../../../models/category';
-
+import { ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'app-categorize-multiple-transactions-dialog',
   standalone: true,
@@ -20,7 +20,8 @@ import { Category } from '../../../models/category';
     MatDialogModule
   ],
   templateUrl: './categorize-multiple-transactions-dialog.component.html',
-  styleUrl: './categorize-multiple-transactions-dialog.component.scss'
+  styleUrl: './categorize-multiple-transactions-dialog.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CategorizeMultipleTransactionsDialogComponent implements OnInit {
   allCategories: Category[] = [];

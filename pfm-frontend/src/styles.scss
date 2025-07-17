@@ -1,34 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
-
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+@use '@angular/material' as mat;
 @use 'styles/variables.scss' as *;
-//@import "assets/scss/style.scss";
-// @import "assets/scss/layouts/sidebar";
-// @import "assets/scss/pages/dashboards";
-// @import "assets/scss/themecolors/blue_theme";
-// @import "assets/scss/layouts/transitions";
 
-body {
-  background-color: $background-color;
-  color: $text-color;
-  font-family: $font-family;
+:root {
+  @include mat.select-overrides((
+    panel-background-color: $card-color,
+    enabled-trigger-text-color: $primary-color,
+    disabled-trigger-text-color: $muted-text-color,
+    placeholder-text-color: $muted-text-color,
+    enabled-arrow-color: $primary-color,
+    disabled-arrow-color: $muted-text-color,
+    focused-arrow-color: $primary-color,
+    invalid-arrow-color: $error-color,
+    trigger-text-font: $font-family,
+    trigger-text-size: 14px,
+    trigger-text-weight: 500,
+    arrow-transform: rotate(0deg) 
+  ));
 }
-
-
-// body {
-//   background-color: $background-color;
-//   color: $text-color;
-//   font-family: $font-family;
-//   margin: 0;
-// }
-
-
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-/* Global Styles */
-/* Global Styles */
-
-

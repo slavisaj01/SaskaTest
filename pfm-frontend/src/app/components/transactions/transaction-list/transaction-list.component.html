@@ -24,20 +24,21 @@
   <!-- Dugme za multi select -->
   <div class="multi-select-actions">
     @if (!isMultiSelectMode) {
-      <button mat-raised-button color="primary" (click)="toggleMultiSelect()">
-        Multi-select
+      <button class="btn btn-primary" (click)="toggleMultiSelect()">
+        Categorize multiple transactions
       </button>
     } @else {
       <div class="action-buttons">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        Please select transactions
         <button
-          mat-raised-button
-          color="primary"
+          class="btn btn-primary"
           [disabled]="!hasSelectedTransactions()"
           (click)="openMultiCategorizationDialog()"
         >
           OK
         </button>
-        <button mat-stroked-button color="warn" (click)="cancelMultiSelect()">Cancel</button>
+        <button class="btn btn-secondary" (click)="cancelMultiSelect()">Cancel</button>
       </div>
     }
   </div>
@@ -86,9 +87,10 @@
         </div>
       </th>
       <td mat-cell *matCellDef="let t">
-        <span class="status-chip" [ngClass]="t.direction === 'c' ? 'income' : 'outcome'">
-          {{ t.direction === 'c' ? 'Income' : 'Outcome' }}
-        </span>
+        <div class="status-indicator">
+          <span class="dot" [ngClass]="t.direction === 'c' ? 'dot-income' : 'dot-outcome'"></span>
+          <span>{{ t.direction === 'c' ? 'Income' : 'Outcome' }}</span>
+        </div>
       </td>
     </ng-container>
 
@@ -113,11 +115,11 @@
       <th mat-header-cell *matHeaderCellDef>Category</th>
       <td mat-cell *matCellDef="let t">
         @if (!t.category) {
-          <button mat-raised-button color="primary" (click)="openCategorizeDialog(t)">
+          <button class="btn btn-primary" (click)="openCategorizeDialog(t)">
             + Add category
           </button>
         } @else {
-          <button mat-stroked-button (click)="openCategorizeDialog(t)">
+          <button class="btn btn-secondary" (click)="openCategorizeDialog(t)">
             {{ t.category }}
           </button>
         }
@@ -130,10 +132,12 @@
       <td mat-cell *matCellDef="let t">
         @if (t.isSplit) {
           <div class="split-cell">
-            <mat-icon color="warn">call_split</mat-icon>
+            <mat-icon>call_split</mat-icon>
           </div>
         } @else {
-          <button mat-raised-button color="primary" (click)="openSplitDialog(t)">Split</button>
+          <div class="split-cell">
+            <button class="btn btn-primary" (click)="openSplitDialog(t)">Split</button>
+          </div>
         }
       </td>
     </ng-container>

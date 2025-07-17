@@ -14296,7 +14296,9 @@
       "currency": "USD",
       "mcc": 5045,
       "kind": "pmt",
-      "isSplit": true
+      "isSplit": true,
+      "category": "Misc Expenses",
+      "subcategory": "Other"
     },
     {
       "id": "1752334466840",

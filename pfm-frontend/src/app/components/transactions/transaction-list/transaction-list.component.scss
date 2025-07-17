@@ -32,21 +32,28 @@
     }
   }
 
-  .status-chip {
-    padding: 4px 8px;
-    border-radius: 12px;
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
+    color: white;
+  }
 
-    &.income {
-      background-color: #1dbf73;
-      color: white;
-    }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
 
-    &.outcome {
-      background-color: #ff4d4f;
-      color: white;
-    }
+  .dot-income {
+    background-color: #1dbf73;
+  }
+
+  .dot-outcome {
+    background-color: #ff4d4f;
   }
 
   .positive-amount {
@@ -179,7 +186,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  mat-icon{
+    transform: translateY(5px);
+    transform: translateX(10px);
 
+  }
   button {
     border-radius: 16px;
     font-weight: 600;
@@ -221,7 +232,7 @@
 .status-header {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   font-weight: 600;
 
   .status-icons {
@@ -247,11 +258,72 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
-
+  margin-bottom: 16px;
+  gap: 12px;
   .action-buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
   }
 }
 
 
+.btn {
+  border: none;
+  border-radius: $border-radius;
+  padding: $spacing-unit $spacing-unit * 2;
+  font-weight: 600;
+  font-size: 14px;
+  min-width: 80px;
+  text-align: center;
+  text-transform: none;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  color: white;
+
+  &:hover {
+    background-color: darken($primary-color, 8%);
+  }
+}
+
+.btn-secondary {
+  background-color: #2a2a2a;
+  color: $muted-text-color;
+  border: 1px solid $border-color;
+
+  &:hover {
+    background-color: darken(#2a2a2a, 5%);
+  }
+}
+
+.split-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  mat-icon {
+    font-size: 20px;
+    color: $primary-color;
+  }
+
+  button {
+    padding: 4px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 20px;
+    background-color: $primary-color;
+    color: white;
+    
+
+    &:hover {
+      background-color: darken($primary-color, 5%);
+    }
+  }
+}

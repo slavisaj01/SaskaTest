@@ -1,4 +1,159 @@
+@use '../../../../styles/variables.scss' as *;
+
+.dialog-container {
+  background-color: #2a2a2a;
+  padding: $spacing-unit * 3;
+  border-radius: $border-radius + 2px;
+  border: 3px solid $primary-color;
+  color: $text-color !important;
+  font-family: $font-family;
+  overflow: hidden;
+  h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: white !important;
+  text-align: center;
+  margin-bottom: $spacing-unit * 2;
+}
+
+  .dialog-description {
+    color: $muted-text-color;
+    margin-bottom: $spacing-unit * 2;
+  }
+
+  .styled-field {
+    width: 100%;
+    margin-bottom: $spacing-unit * 2;
+
+    .mat-mdc-form-field-flex {
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .mat-mdc-select-value {
+      color: $text-color !important;
+      font-weight: 500;
+    }
+
+    .mat-mdc-form-field-label {
+      color: $muted-text-color !important;
+      font-size: 14px;
+    }
+
+    .mat-mdc-select-arrow {
+      color: $primary-color !important;
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+      background-color: transparent !important;
+    }
+
+    .mdc-notched-outline,
+    .mat-mdc-form-field-outline {
+      display: none !important;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      background-color: transparent !important;
+      padding: 0;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      background-color: $card-color !important;
+    }
+
+    // dodatno za notched-outline da ostane samo plavi okvir:
+  .mat-mdc-form-field:not(.mat-form-field-disabled) .mdc-notched-outline {
+    border-color: $primary-color !important;
+    background-color: transparent !important;
+  }
+
+  .mat-mdc-form-field:hover .mdc-notched-outline {
+    border-color: $primary-color !important;
+  }
+
+  // isključi line ripple ako koristiš variantu s underline
+  .mat-mdc-form-field .mdc-line-ripple {
+    display: none !important;
+  }
+  }
+
+  .dialog-actions {
+    margin-top: $spacing-unit * 2;
+    display: flex;
+    justify-content: center;
+    gap: $spacing-unit * 2;
+
+    .btn-primary {
+      background-color: $primary-color;
+      color: white;
+      border-radius: $border-radius;
+      padding: $spacing-unit $spacing-unit * 2;
+      font-weight: 600;
+
+      &:hover {
+        background-color: darken($primary-color, 8%);
+      }
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+      border-radius: $border-radius;
+      padding: $spacing-unit $spacing-unit * 2;
+      font-weight: 600;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
+  }
+}
+
+// === Dropdown panel ===
+.category-select-panel {
+  background-color: #0f111a !important;
+  color: $text-color !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 0;
+  overflow: hidden;
+  max-height: 250px;
+}
+
+.category-select-option {
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+  font-size: 15px;
+  background-color: transparent !important;
+  color: $text-color !important;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+
+  &.mat-mdc-selected {
+    background-color: rgba($primary-color, 0.2) !important;
+    color: $primary-color !important;
+  }
+}
+
+// === Scrollbar ===
+.category-select-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.category-select-panel::-webkit-scrollbar-thumb {
+  background-color: $muted-text-color;
+  border-radius: 4px;
+}
+
+.category-select-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .full-width {
   width: 100%;
-  margin-bottom: 1rem;
 }
