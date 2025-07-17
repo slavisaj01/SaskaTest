@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+// 🎨 Boje iz dizajna
+$primary-color: #3D58ED; // Royal Blue
+$secondary-color: #8A8A8A; // Telegrey
+$tab-color: #3D58ED; // isti kao primary za konzistentnost
+
+$text-color: #ffffff; // beli tekst na tamnoj pozadini
+$muted-text-color: #8A8A8A;
+$background-color: #000000; // Total Black
+$card-color: #121212; // nijansa crne za kartice
+$card-hover-color: #1e1e1e;
+$border-color: #2c2f36;
+
+$success-color: #8bb43c;
+$error-color: #e74c3c;
+
+// 🧱 Spacing & radius
+$border-radius: 14px;
+$spacing-unit: 8px;
+
+// 🅰️ Typography
+$font-family: 'Manrope', sans-serif;
+$heading-font-weight: 600;
+$text-font-weight: 400;
+
+// 🧑‍🎨 Shadow
+$shadow-default: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+// ✨ Primena
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: $font-family;
+  font-weight: $text-font-weight;
+}
+
+.card {
+  background-color: $card-color;
+  border-radius: $border-radius;
+  padding: $spacing-unit * 2;
+  box-shadow: $shadow-default;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $card-hover-color;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $heading-font-weight;
+  color: $text-color;
+}
+
+button {
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  padding: $spacing-unit $spacing-unit * 2;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+input, select, mat-form-field {
+  background-color: $card-color;
+  color: $text-color;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  padding: $spacing-unit;
+  font-family: $font-family;
+
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+  }
+}
+
+// Chip styling
+mat-chip {
+  background-color: $tab-color;
+  color: white;
+  font-weight: 500;
+  border-radius: 16px;
+  padding: 4px 12px;
+}
+
+// Table styling
+.table-container {
+  background-color: $card-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: $spacing-unit * 1.5;
+      color: $text-color;
+    }
+
+    th {
+      background-color: $background-color;
+      text-align: left;
+    }
+
+    tr {
+      border-bottom: 1px solid $border-color;
+
+      &:hover {
+        background-color: $card-hover-color;
+      }
+    }
+  }
+}

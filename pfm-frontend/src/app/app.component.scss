@@ -1,0 +1,101 @@
+@use '../styles/variables.scss' as *;
+
+.layout {
+  display: flex;
+  height: 100vh;
+  background-color: $background-color;
+  font-family: $font-family;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 60px;
+  background-color: $card-color;
+  padding: $spacing-unit;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  border-right: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit;
+
+  &.expanded {
+    width: 220px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: $spacing-unit * 1.25;
+    border-radius: $border-radius;
+    color: $muted-text-color;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+
+    mat-icon {
+      font-size: 24px;
+      color: $text-color;
+      transition: color 0.3s ease;
+      min-width: 24px;
+    }
+
+    .label {
+      margin-left: $spacing-unit;
+      color: $text-color;
+      font-weight: 500;
+      opacity: 0;
+      white-space: nowrap;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateX(-8px);
+      flex-grow: 1;
+    }
+
+    &:hover {
+      background-color: $card-hover-color;
+      color: $text-color;
+
+      mat-icon {
+        color: $primary-color;
+      }
+    }
+
+    &.active {
+      background-color: $primary-color;
+      color: white;
+
+      mat-icon {
+        color: white;
+      }
+    }
+  }
+
+  &.expanded .sidebar-item .label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+.top-toolbar {
+  background-color: $card-color;
+  color: $text-color;
+  border-bottom: 1px solid $border-color;
+  padding: $spacing-unit * 2 $spacing-unit * 3;
+  font-size: 20px;
+  font-weight: $heading-font-weight;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.main-content {
+  padding: $spacing-unit * 3;
+  overflow-y: auto;
+}

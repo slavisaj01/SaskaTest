@@ -1,0 +1,257 @@
+@use "../../../../styles/variables.scss" as *;
+
+
+.styled-table {
+  width: 100%;
+  background-color: #1c1c1c;
+  color: white;
+  border-radius: 12px;
+
+  th {
+    color: #aaa;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: #1c1c1c;
+  }
+
+  td {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .status-chip {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 13px;
+
+    &.income {
+      background-color: #1dbf73;
+      color: white;
+    }
+
+    &.outcome {
+      background-color: #ff4d4f;
+      color: white;
+    }
+  }
+
+  .positive-amount {
+    color: #1dbf73;
+    font-weight: 600;
+  }
+
+  .negative-amount {
+    color: #ff4d4f;
+    font-weight: 600;
+  }
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  .search-filter-wrapper {
+    display: flex;
+    gap: 0.5rem;
+
+    input {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background: #2a2a2a;
+      color: white;
+    }
+
+    .filter-btn {
+      background: #333;
+      color: white;
+    }
+  }
+}
+
+.filter-container {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-btn {
+  border-radius: 24px;
+  padding: 6px 16px;
+  font-weight: 600;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  z-index: 1000;
+  background-color: $card-color;
+  color: $text-color;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  padding: $spacing-unit * 2;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  min-width: 240px;
+  transition: opacity 0.3s ease;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+
+  button {
+    border-radius: 20px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    transition: background-color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: lighten($card-color, 5%);
+      cursor: pointer;
+    }
+
+    &.mat-button-disabled {
+      opacity: 0.5;
+    }
+  }
+
+  button[disabled] {
+    background-color: $primary-color;
+    color: white;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .ellipsis {
+    background: transparent;
+    color: #888;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .mat-icon-button {
+    background-color: $primary-color;
+    color: white;
+
+    mat-icon {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background-color: darken($primary-color, 5%);
+    }
+  }
+
+  .page-info {
+    margin-left: 1rem;
+    font-size: 14px;
+    color: $text-color;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    border-radius: 16px;
+    font-weight: 600;
+    padding: 4px 12px;
+    font-size: 13px;
+    text-transform: none;
+
+    &:disabled {
+      background-color: transparent;
+      color: #666;
+      border: 1px solid #444;
+    }
+  }
+
+  .mat-raised-button {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($primary-color, 5%);
+    }
+  }
+
+  .mat-stroked-button {
+    border-color: $border-color;
+    color: $text-color;
+  }
+}
+
+
+  mat-icon {
+    font-size: 20px;
+  }
+
+  button {
+    padding: 2px 6px;
+    font-size: 13px;
+  }
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+
+  .status-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0px;
+    margin-left: 4px;
+
+    mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+      line-height: 16px;
+      padding: 0;
+      margin: 0;
+      color: #8a8a8a; 
+    }
+  }
+}
+
+.multi-select-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+
