@@ -13,40 +13,45 @@ export class TransactionService {
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<any[]>('http://localhost:3000/transactions').pipe(
       map((data) =>
-        data.map((item) => ({
-          id: item.id,
-          beneficiaryName: item['beneficiary-name'] || item.beneficiaryName,
-          date: new Date(item.date).toISOString(), 
-          direction: item.direction,
-          amount: typeof item.amount === 'string'
-          ? parseFloat(item.amount.replace(/,/g, ''))
-          : item.amount,
-          currency: item.currency,
-          kind: item.kind,
-          isSplit: item['isSplit'] ?? false,
-          category: item.category ?? '',
-          subcategory: item.subcategory ?? ''
-        }))
+        data.map((item) => {
+          console.log('Raw item:', item); // šta vraća JSON server
+
+          const transaction: Transaction = {
+            id: item.id,
+            beneficiaryName: item['beneficiary-name'] || item.beneficiaryName,
+            date: new Date(item.date).toISOString(), 
+            direction: item.direction,
+            amount: typeof item.amount === 'string'
+              ? parseFloat(item.amount.replace(/,/g, ''))
+              : item.amount,
+            currency: item.currency,
+            kind: item.kind,
+            isSplit: item['isSplit'] ?? false,
+            splits: item.splits ?? [], // obavezno!
+            category: item.category ?? '',
+            subcategory: item.subcategory ?? '',
+            selected: false
+          };
+
+          console.log('Parsed transaction:', transaction); // parsirano
+          return transaction;
+        })
       )
     );
   }
 
+
+
   updateTransactionCategory(id: string, update: { category: string; subcategory?: string }): Observable<any> {
     return this.http.patch(`http://localhost:3000/transactions/${id}`, update);
   }
-  deleteTransaction(id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/transactions/${id}`);
+  
+  splitTransactionApiStyle(transactionId: string, splits: { catcode: string; amount: number }[]): Observable<any> {
+    return this.http.patch(`http://localhost:3000/transactions/${transactionId}`, {
+      isSplit: true,
+      splits: splits
+    });
   }
-
-  splitTransaction(originalId: string, newTransactions: Partial<Transaction>[]): Observable<any> {
-    const deleteOriginal$ = this.deleteTransaction(originalId);
-    const addNewTransactions$ = newTransactions.map(tx =>
-      this.http.post(`http://localhost:3000/transactions`, tx)
-    );
-
-    return deleteOriginal$.pipe(
-      switchMap(() => forkJoin(addNewTransactions$))
-    );
-  }
+    
 
 }

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { ViewEncapsulation } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -33,7 +34,8 @@ import { CategoryService } from '../../../services/category.service';
     MatDialogActions
   ],
   templateUrl: './split-transaction-dialog.component.html',
-  styleUrl: './split-transaction-dialog.component.scss'
+  styleUrl: './split-transaction-dialog.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class SplitTransactionDialogComponent implements OnInit {
   splits: Split[] = [];
@@ -99,6 +101,9 @@ export class SplitTransactionDialogComponent implements OnInit {
     return original===total;
   }
 
+  get amountDifference(): number {
+    return this.originalTransaction.amount - this.totalSplitAmount;
+  }
 
   applySplits(): void {
     if (!this.isAmountValid()) {
@@ -106,25 +111,33 @@ export class SplitTransactionDialogComponent implements OnInit {
       return;
     }
 
-    const newTransactions: Transaction[] = [];
+    const splitsToSend = this.splits.map((split) => {
+      let selectedName: string;
 
-    for (let i = 0; i < this.splits.length; i++) {
-      const split = this.splits[i];
+      if (split.subcategory) {
+        // Ako je izabrana podkategorija, nju saljemo
+        selectedName = split.subcategory;
+      } else if (split.category?.name) {
+        // Ako nije, saljemo kategoriju
+        selectedName = split.category.name;
+      } else {
+        return null; // preskoci ako nista nije selektovano
+      }
 
-      const newTransaction: Transaction = {
-        ...this.originalTransaction,
-        id: (Date.now() + i).toString(),
-        amount: split.amount,
-        category: split.category?.name || 'Uncategorized',
-        subcategory: split.subcategory,
-        isSplit: true
+      const selectedCode = this.allCategories.find((c) => c.name === selectedName)?.code;
+
+      if (!selectedCode) return null;
+
+      return {
+        catcode: selectedCode,
+        amount: split.amount
       };
+    }).filter(Boolean); // filtriraj sve koje su null
 
-      newTransactions.push(newTransaction);
-    }
+    this.dialogRef.close(splitsToSend);
+  }
 
-    this.dialogRef.close(newTransactions);
-  } 
+
 
 
   cancel(): void {

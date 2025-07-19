@@ -1,55 +1,80 @@
-<h2 mat-dialog-title>Split transaction</h2>
+<div class="dialog-container">
+  <h2>Split transaction</h2>
 
-<mat-dialog-content class="split-dialog-content">
-  <p>Please split the transaction into categories:</p>
-
-  @for (split of splits; track split.id) {
-    <div class="split-form-group">
-      <div class="row">
-        <mat-form-field appearance="fill" class="category-field">
+  <p class="dialog-description">
+    Please split the transaction into categories:
+  </p>
+  <div class="split-amount-info" [ngClass]="{ 'error': !isAmountValid() }">
+    @if (!isAmountValid()) {
+      <span>
+        Total amount must equal original transaction amount ({{ originalTransaction.amount | number: '1.2-2' }}).
+        You are {{ amountDifference > 0 ? 'under' : 'over' }} by {{ amountDifference | number: '1.2-2' }}.
+      </span>
+    } @else {
+      <span>
+        Remaining: {{ amountDifference | number: '1.2-2' }}
+      </span>
+    }
+  </div>
+  <mat-dialog-content class="split-dialog-content">
+    @for (split of splits; track split.id) {
+      <div class="split-form-group">
+        <mat-form-field appearance="fill" class="styled-field">
           <mat-label>Choose category</mat-label>
           <mat-select
+            panelClass="category-select-panel"
             [(ngModel)]="split.category"
             (selectionChange)="onCategoryChange(split)">
-            @for (cat of parentCategories; track cat.id) {
-              <mat-option [value]="cat">{{ cat.name }}</mat-option>
+            @for (cat of parentCategories; track cat.code) {
+              <mat-option class="category-select-option" [value]="cat">
+                {{ cat.name }}
+              </mat-option>
             }
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="subcategory-field">
+        <mat-form-field appearance="fill" class="styled-field">
           <mat-label>Choose subcategory (optional)</mat-label>
           <mat-select
+            panelClass="category-select-panel"
             [(ngModel)]="split.subcategory"
             [disabled]="split.filteredSubcategories.length === 0">
             @for (sub of split.filteredSubcategories; track sub) {
-              <mat-option [value]="sub">{{ sub }}</mat-option>
+              <mat-option class="category-select-option" [value]="sub">
+                {{ sub }}
+              </mat-option>
             }
           </mat-select>
         </mat-form-field>
-      </div>
 
-      <div class="row align-center">
-        <mat-form-field appearance="fill" class="amount-field">
+        <mat-form-field appearance="fill" class="styled-field">
           <mat-label>Enter amount</mat-label>
           <input matInput type="number" [(ngModel)]="split.amount" min="0" />
         </mat-form-field>
 
         @if (splits.length > 2) {
-          <button mat-icon-button color="warn" (click)="removeSplit(split)">
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="removeSplit(split)"
+            style="align-self: flex-end">
             <mat-icon>delete</mat-icon>
           </button>
         }
       </div>
-    </div>
-  }
+    }
 
-  <a class="add-split-link" (click)="addSplit()">+ Add new category</a>
-</mat-dialog-content>
+    <a class="add-split-link" (click)="addSplit()">+ Add category</a>
+  </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-raised-button color="primary" [disabled]="!isAmountValid()" (click)="applySplits()">
-    Apply
-  </button>
-</mat-dialog-actions>
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn-secondary" (click)="cancel()">Cancel</button>
+    <button
+      mat-button
+      class="btn-primary"
+      [disabled]="!isAmountValid()"
+      (click)="applySplits()">
+      Apply
+    </button>
+  </mat-dialog-actions>
+</div>

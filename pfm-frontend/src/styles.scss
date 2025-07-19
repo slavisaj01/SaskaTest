@@ -17,3 +17,24 @@
     arrow-transform: rotate(0deg) 
   ));
 }
+
+/* Global scrollbar styling */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: $muted-text-color;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: $muted-text-color transparent;
+}
+

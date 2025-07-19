@@ -1,5 +1,5 @@
 <div class="dialog-container">
-  <h2 mat-dialog-title>Add category</h2>
+  <h2>Add category</h2>
 
   <mat-dialog-content>
     <p class="dialog-description">Please choose category for this transaction:</p>
@@ -27,7 +27,7 @@
         [(ngModel)]="selectedSubcategory"
         [disabled]="subcategories.length === 0"
         panelClass="category-select-panel">
-        @for (sub of subcategories; track sub.id) {
+        @for (sub of subcategories; track sub.code) {
           <mat-option class="category-select-option" [value]="sub.name">{{ sub.name }}</mat-option>
         }
       </mat-select>

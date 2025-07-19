@@ -21,6 +21,7 @@
       </div>
     </div>
   </div>
+
   <!-- Dugme za multi select -->
   <div class="multi-select-actions">
     @if (!isMultiSelectMode) {
@@ -30,15 +31,11 @@
     } @else {
       <div class="action-buttons">
         <mat-icon>keyboard_arrow_down</mat-icon>
-        Please select transactions
-        <button
-          class="btn btn-primary"
-          [disabled]="!hasSelectedTransactions()"
-          (click)="openMultiCategorizationDialog()"
-        >
+        <p>Please select transactions</p>
+        <button class="btn btn-primary" [disabled]="!hasSelectedTransactions()" (click)="openMultiCategorizationDialog()">
           OK
         </button>
-        <button class="btn btn-secondary" (click)="cancelMultiSelect()">Cancel</button>
+        <button class="btn btn-secondary" (click)="cancelMultiSelect()">CANCEL</button>
       </div>
     }
   </div>
@@ -132,7 +129,12 @@
       <td mat-cell *matCellDef="let t">
         @if (t.isSplit) {
           <div class="split-cell">
-            <mat-icon>call_split</mat-icon>
+            <mat-icon 
+              class="split-icon-clickable"
+              (click)="toggleAccordion(t.id)"
+              matTooltip="Show split details">
+              call_split
+            </mat-icon>
           </div>
         } @else {
           <div class="split-cell">
@@ -142,21 +144,43 @@
       </td>
     </ng-container>
 
-    <!-- Header i redovi -->
-    <tr
-      mat-header-row
-      *matHeaderRowDef="isMultiSelectMode
-        ? ['select', 'beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']
-        : ['beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']"
-    ></tr>
+    <!-- Header red -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-    <tr
-      mat-row
-      *matRowDef="let row; columns: isMultiSelectMode
-        ? ['select', 'beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']
-        : ['beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']"
-    ></tr>
+    <!-- Redovi + Accordion -->
+    <ng-container *matRowDef="let row; columns: displayedColumns">
+      <tr mat-row></tr>
+
+      @if (expandedTransactionId === row.id) {
+        <tr class="accordion-row">
+          <td [attr.colspan]="displayedColumns.length">
+            <div class="accordion-content">
+              <h4>Split details:</h4>
+              <div class="split-list">
+                @for (split of row.splits ?? []; track $index) {
+                  <div class="split-item">
+                    <mat-icon class="split-dot">chevron_right</mat-icon>
+                    <div class="split-info">
+                      <p>
+                        <strong>{{ getSplitLabel(split.catcode).labelType }}:</strong>
+                        {{ getSplitLabel(split.catcode).label }}
+                      </p>
+                      <p>
+                        <strong>Amount:</strong> {{ split.amount | number: '1.2-2' }} {{ row.currency }}
+                      </p>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+          </td>
+        </tr>
+      }
+    </ng-container>
   </table>
+
+
   <!-- Paginacija -->
   <div class="pagination">
     @if (currentPage > 1) {

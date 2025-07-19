@@ -14273,7 +14273,18 @@
       "mcc": null,
       "kind": "pmt",
       "category": "Misc Expenses",
-      "subcategory": ""
+      "subcategory": "",
+      "isSplit": true,
+      "splits": [
+        {
+          "catcode": "I",
+          "amount": 30
+        },
+        {
+          "catcode": "22",
+          "amount": 0.3
+        }
+      ]
     },
     {
       "id": "81883425",
@@ -14284,7 +14295,18 @@
       "description": "Massage",
       "currency": "USD",
       "mcc": 8050,
-      "kind": "pmt"
+      "kind": "pmt",
+      "isSplit": true,
+      "splits": [
+        {
+          "catcode": "46",
+          "amount": 24
+        },
+        {
+          "catcode": "28",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "33401399",
@@ -14435,242 +14457,202 @@
     {
       "code": "A",
       "parent-code": null,
-      "name": "Misc Expenses",
-      "id": "e2f5"
+      "name": "Misc Expenses"
     },
     {
       "code": "B",
       "parent-code": null,
-      "name": "Auto & Transport",
-      "id": "22a5"
+      "name": "Auto & Transport"
     },
     {
       "code": "C",
       "parent-code": null,
-      "name": "Bills & Utilities",
-      "id": "2945"
+      "name": "Bills & Utilities"
     },
     {
       "code": "D",
       "parent-code": null,
-      "name": "Education",
-      "id": "895b"
+      "name": "Education"
     },
     {
       "code": "E",
       "parent-code": null,
-      "name": "Entertainment",
-      "id": "c8c2"
+      "name": "Entertainment"
     },
     {
       "code": "F",
       "parent-code": null,
-      "name": "Fees & Charges",
-      "id": "bbb8"
+      "name": "Fees & Charges"
     },
     {
       "code": "G",
       "parent-code": null,
-      "name": "Finullcial",
-      "id": "908b"
+      "name": "Finullcial"
     },
     {
       "code": "H",
       "parent-code": null,
-      "name": "Gifts & Donations",
-      "id": "0481"
+      "name": "Gifts & Donations"
     },
     {
       "code": "I",
       "parent-code": null,
-      "name": "Health & Fitness",
-      "id": "6b8e"
+      "name": "Health & Fitness"
     },
     {
       "code": "J",
       "parent-code": null,
-      "name": "Home",
-      "id": "1a8a"
+      "name": "Home"
     },
     {
       "code": "K",
       "parent-code": null,
-      "name": "Income",
-      "id": "e2e9"
+      "name": "Income"
     },
     {
       "code": "L",
       "parent-code": null,
-      "name": "Kids",
-      "id": "fe3e"
+      "name": "Kids"
     },
     {
       "code": "M",
       "parent-code": null,
-      "name": "Loans",
-      "id": "b63e"
+      "name": "Loans"
     },
     {
       "code": "N",
       "parent-code": null,
-      "name": "Personal Care",
-      "id": "d4b7"
+      "name": "Personal Care"
     },
     {
       "code": "O",
       "parent-code": null,
-      "name": "Pets",
-      "id": "f99e"
+      "name": "Pets"
     },
     {
       "code": "P",
       "parent-code": null,
-      "name": "Shopping",
-      "id": "47fe"
+      "name": "Shopping"
     },
     {
       "code": "R",
       "parent-code": null,
-      "name": "Taxes",
-      "id": "b4eb"
+      "name": "Taxes"
     },
     {
       "code": "S",
       "parent-code": null,
-      "name": "Transfer",
-      "id": "a257"
+      "name": "Transfer"
     },
     {
       "code": "T",
       "parent-code": null,
-      "name": "Travel",
-      "id": "8575"
+      "name": "Travel"
     },
     {
       "code": "U",
       "parent-code": null,
-      "name": "Food & Dining",
-      "id": "bc09"
+      "name": "Food & Dining"
     },
     {
       "code": "Z",
       "parent-code": null,
-      "name": "Split",
-      "id": "4885"
+      "name": "Split"
     },
     {
       "code": "0",
       "parent-code": "A",
-      "name": "Other",
-      "id": "ab72"
+      "name": "Other"
     },
     {
       "code": "1",
       "parent-code": "B",
-      "name": "Other",
-      "id": "5d74"
+      "name": "Other"
     },
     {
       "code": "2",
       "parent-code": "B",
-      "name": "Auto Insurance",
-      "id": "e31d"
+      "name": "Auto Insurance"
     },
     {
       "code": "3",
       "parent-code": "B",
-      "name": "Auto Leasing",
-      "id": "a7c4"
+      "name": "Auto Leasing"
     },
     {
       "code": "4",
       "parent-code": "B",
-      "name": "Gas & Fuel",
-      "id": "8b8f"
+      "name": "Gas & Fuel"
     },
     {
       "code": "5",
       "parent-code": "B",
-      "name": "Parking",
-      "id": "b688"
+      "name": "Parking"
     },
     {
       "code": "7",
       "parent-code": "B",
-      "name": "Service & Parts",
-      "id": "f50d"
+      "name": "Service & Parts"
     },
     {
       "code": "9",
       "parent-code": "C",
-      "name": "Home Phone",
-      "id": "2d80"
+      "name": "Home Phone"
     },
     {
       "code": "10",
       "parent-code": "C",
-      "name": "Internet",
-      "id": "faf4"
+      "name": "Internet"
     },
     {
       "code": "11",
       "parent-code": "C",
-      "name": "Mobile Phone",
-      "id": "1ed5"
+      "name": "Mobile Phone"
     },
     {
       "code": "12",
       "parent-code": "C",
-      "name": "Television",
-      "id": "cdfe"
+      "name": "Television"
     },
     {
       "code": "13",
       "parent-code": "C",
-      "name": "Utilities",
-      "id": "2a79"
+      "name": "Utilities"
     },
     {
       "code": "15",
       "parent-code": "D",
-      "name": "Books & Supplies",
-      "id": "8803"
+      "name": "Books & Supplies"
     },
     {
       "code": "17",
       "parent-code": "D",
-      "name": "Tuition",
-      "id": "7918"
+      "name": "Tuition"
     },
     {
       "code": "20",
       "parent-code": "E",
-      "name": "Arts",
-      "id": "d054"
+      "name": "Arts"
     },
     {
       "code": "21",
       "parent-code": "E",
-      "name": "Movies & DVDs",
-      "id": "f053"
+      "name": "Movies & DVDs"
     },
     {
       "code": "22",
       "parent-code": "E",
-      "name": "Music",
-      "id": "c8c1"
+      "name": "Music"
     },
     {
       "code": "23",
       "parent-code": "E",
-      "name": "Newspapers & Magazines",
-      "id": "18c4"
+      "name": "Newspapers & Magazines"
     },
     {
       "code": "25",
       "parent-code": "F",
-      "name": "ATM Fee",
-      "id": "4fca"
+      "name": "ATM Fee"
     },
     {
       "code": "26",
@@ -14681,278 +14663,232 @@
     {
       "code": "28",
       "parent-code": "F",
-      "name": "Late Fee",
-      "id": "f8f5"
+      "name": "Late Fee"
     },
     {
       "code": "33",
       "parent-code": "G",
-      "name": "Life Insurance",
-      "id": "d166"
+      "name": "Life Insurance"
     },
     {
       "code": "38",
       "parent-code": "U",
-      "name": "Groceries",
-      "id": "dd81"
+      "name": "Groceries"
     },
     {
       "code": "39",
       "parent-code": "U",
-      "name": "Restaurants",
-      "id": "e37d"
+      "name": "Restaurants"
     },
     {
       "code": "41",
       "parent-code": "H",
-      "name": "Charity",
-      "id": "f191"
+      "name": "Charity"
     },
     {
       "code": "42",
       "parent-code": "H",
-      "name": "Gift",
-      "id": "41ee"
+      "name": "Gift"
     },
     {
       "code": "44",
       "parent-code": "I",
-      "name": "Dentist",
-      "id": "44ea"
+      "name": "Dentist"
     },
     {
       "code": "45",
       "parent-code": "I",
-      "name": "Doctor",
-      "id": "4859"
+      "name": "Doctor"
     },
     {
       "code": "46",
       "parent-code": "I",
-      "name": "Eyecare",
-      "id": "0377"
+      "name": "Eyecare"
     },
     {
       "code": "47",
       "parent-code": "I",
-      "name": "Gym",
-      "id": "0117"
+      "name": "Gym"
     },
     {
       "code": "48",
       "parent-code": "I",
-      "name": "Health Insurance",
-      "id": "cb67"
+      "name": "Health Insurance"
     },
     {
       "code": "49",
       "parent-code": "I",
-      "name": "Pharmacy",
-      "id": "ca41"
+      "name": "Pharmacy"
     },
     {
       "code": "50",
       "parent-code": "I",
-      "name": "Sports",
-      "id": "a5cc"
+      "name": "Sports"
     },
     {
       "code": "53",
       "parent-code": "J",
-      "name": "Home Improvement",
-      "id": "4264"
+      "name": "Home Improvement"
     },
     {
       "code": "54",
       "parent-code": "J",
-      "name": "Home Insurance",
-      "id": "a893"
+      "name": "Home Insurance"
     },
     {
       "code": "55",
       "parent-code": "J",
-      "name": "Home Services",
-      "id": "0016"
+      "name": "Home Services"
     },
     {
       "code": "56",
       "parent-code": "J",
-      "name": "Home Supplies",
-      "id": "ddf7"
+      "name": "Home Supplies"
     },
     {
       "code": "58",
       "parent-code": "J",
-      "name": "Mortgage & Rent",
-      "id": "3230"
+      "name": "Mortgage & Rent"
     },
     {
       "code": "59",
       "parent-code": "K",
-      "name": "Other",
-      "id": "016b"
+      "name": "Other"
     },
     {
       "code": "60",
       "parent-code": "K",
-      "name": "Bonus",
-      "id": "9eff"
+      "name": "Bonus"
     },
     {
       "code": "61",
       "parent-code": "K",
-      "name": "Interest Income",
-      "id": "fa8d"
+      "name": "Interest Income"
     },
     {
       "code": "62",
       "parent-code": "K",
-      "name": "Paycheck",
-      "id": "605d"
+      "name": "Paycheck"
     },
     {
       "code": "64",
       "parent-code": "K",
-      "name": "Rental Income",
-      "id": "7644"
+      "name": "Rental Income"
     },
     {
       "code": "67",
       "parent-code": "L",
-      "name": "Allowance",
-      "id": "4381"
+      "name": "Allowance"
     },
     {
       "code": "68",
       "parent-code": "L",
-      "name": "Baby Supplies",
-      "id": "c5b6"
+      "name": "Baby Supplies"
     },
     {
       "code": "71",
       "parent-code": "L",
-      "name": "Kids Activities",
-      "id": "d8bb"
+      "name": "Kids Activities"
     },
     {
       "code": "72",
       "parent-code": "L",
-      "name": "Toys",
-      "id": "1193"
+      "name": "Toys"
     },
     {
       "code": "74",
       "parent-code": "M",
-      "name": "Loan Fees and Charges",
-      "id": "067c"
+      "name": "Loan Fees and Charges"
     },
     {
       "code": "77",
       "parent-code": "M",
-      "name": "Loan Payment",
-      "id": "5af5"
+      "name": "Loan Payment"
     },
     {
       "code": "80",
       "parent-code": "N",
-      "name": "Hair",
-      "id": "842b"
+      "name": "Hair"
     },
     {
       "code": "82",
       "parent-code": "N",
-      "name": "Spa & Massage",
-      "id": "4fc4"
+      "name": "Spa & Massage"
     },
     {
       "code": "83",
       "parent-code": "O",
-      "name": "Other",
-      "id": "4f25"
+      "name": "Other"
     },
     {
       "code": "84",
       "parent-code": "O",
-      "name": "Pet Food & Supplies",
-      "id": "da88"
+      "name": "Pet Food & Supplies"
     },
     {
       "code": "85",
       "parent-code": "O",
-      "name": "Pet Grooming",
-      "id": "7d93"
+      "name": "Pet Grooming"
     },
     {
       "code": "86",
       "parent-code": "O",
-      "name": "Veterinary",
-      "id": "7076"
+      "name": "Veterinary"
     },
     {
       "code": "88",
       "parent-code": "P",
-      "name": "Books",
-      "id": "bc92"
+      "name": "Books"
     },
     {
       "code": "89",
       "parent-code": "P",
-      "name": "Clothing",
-      "id": "c87c"
+      "name": "Clothing"
     },
     {
       "code": "90",
       "parent-code": "P",
-      "name": "Electronics & Software",
-      "id": "0ecb"
+      "name": "Electronics & Software"
     },
     {
       "code": "92",
       "parent-code": "P",
-      "name": "Sporting Goods",
-      "id": "1c94"
+      "name": "Sporting Goods"
     },
     {
       "code": "96",
       "parent-code": "R",
-      "name": "Property Tax",
-      "id": "2dbf"
+      "name": "Property Tax"
     },
     {
       "code": "98",
       "parent-code": "R",
-      "name": "Income Tax",
-      "id": "a3fa"
+      "name": "Income Tax"
     },
     {
       "code": "100",
       "parent-code": "S",
-      "name": "Credit Card Payment",
-      "id": "37b5"
+      "name": "Credit Card Payment"
     },
     {
       "code": "103",
       "parent-code": "T",
-      "name": "Air Travel",
-      "id": "f77c"
+      "name": "Air Travel"
     },
     {
       "code": "104",
       "parent-code": "T",
-      "name": "Hotel",
-      "id": "bdb4"
+      "name": "Hotel"
     },
     {
       "code": "105",
       "parent-code": "T",
-      "name": "Rental Car & Taxi",
-      "id": "2a27"
+      "name": "Rental Car & Taxi"
     },
     {
       "code": "106",
       "parent-code": "T",
-      "name": "Vacation",
-      "id": "950e"
+      "name": "Vacation"
     }
   ],
   "mccCodes": [

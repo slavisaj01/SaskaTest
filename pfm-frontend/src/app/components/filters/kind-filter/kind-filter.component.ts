@@ -15,7 +15,30 @@ export class KindFilterComponent {
   @Input() selectedKind: string = 'All';
   @Output() kindSelected = new EventEmitter<string>();
 
+  kindLabels: { [key: string]: string } = {
+    All: 'All',
+    dep: 'Deposit',
+    wdw: 'Withdrawal',
+    pmt: 'Payment',
+    fee: 'Fee',
+    inc: 'Interest Credit',
+    rev: 'Reversal',
+    adj: 'Adjustment',
+    lnd: 'Loan Disbursement',
+    lnr: 'Loan Repayment',
+    fcx: 'FX Exchange',
+    aop: 'Account Opening',
+    acl: 'Account Closing',
+    spl: 'Split Payment',
+    sal: 'Salary',
+  };
+
+  getLabel(kind: string): string {
+    return this.kindLabels[kind] || kind;
+  }
+
   onSelectionChange(kind: string) {
     this.kindSelected.emit(kind);
   }
 }
+

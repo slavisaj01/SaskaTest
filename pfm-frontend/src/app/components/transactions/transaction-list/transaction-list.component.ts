@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Transaction } from '../../../models/transaction';
 import { TransactionService } from '../../../services/transaction.service';
+import { Category } from '../../../models/category';
+import { CategoryService } from '../../../services/category.service';
+
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
-import { TransactionItemComponent } from '../transaction-item/transaction-item.component';
-import { TransactionFiltersComponent } from '../transaction-filters/transaction-filters.component';
-import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import { forkJoin } from 'rxjs';
-import { CategorizeMultipleTransactionsDialogComponent } from '../../dialogs/categorize-multiple-transactions-dialog/categorize-multiple-transactions-dialog.component';
-import { TreemapGraphComponent } from '../../graphs/treemap-graph/treemap-graph.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
 import { KindFilterComponent } from '../../filters/kind-filter/kind-filter.component';
 import { CategorizeTransactionDialogComponent } from '../../dialogs/categorize-transaction-dialog/categorize-transaction-dialog.component';
+import { CategorizeMultipleTransactionsDialogComponent } from '../../dialogs/categorize-multiple-transactions-dialog/categorize-multiple-transactions-dialog.component';
 import { SplitTransactionDialogComponent } from '../../dialogs/split-transaction-dialog/split-transaction-dialog.component';
-import { ElementRef, HostListener } from '@angular/core';
+
 @Component({
   selector: 'app-transaction-list',
   imports: [
@@ -37,31 +37,38 @@ import { ElementRef, HostListener } from '@angular/core';
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.scss'
 })
-export class TransactionListComponent implements OnInit{
+export class TransactionListComponent implements OnInit {
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
+  transactionsCategories: Category[] = [];
+
   kinds: string[] = [];
   selectedKind: string = 'All';
   isMultiSelectMode: boolean = false;
   fromDate: Date | null = null;
   toDate: Date | null = null;
-  //selectedView: 'list' | 'treemap' | 'bar' | 'donut' = 'list';
- 
+
+  showKindFilter: boolean = false;
 
   constructor(
-  private transactionService: TransactionService,
-  private dialog: MatDialog,
-  private elementRef: ElementRef
+    private transactionService: TransactionService,
+    private categoryService: CategoryService,
+    private dialog: MatDialog,
+    private elementRef: ElementRef
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.transactionService.getTransactions().subscribe((data) => {
-      this.transactions = data;
       this.transactions = data.map(t => ({ ...t, selected: false }));
-      this.kinds = [...new Set(data.map(t => t.kind))]; // izvlačenje unikatnih `kind` vrednosti
+      this.kinds = [...new Set(data.map(t => t.kind))];
       this.applyFiltersAndSorting();
     });
+
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.transactionsCategories = categories;
+    });
   }
+
 
   onKindSelected(kind: string): void {
     this.currentPage = 1;
@@ -72,20 +79,18 @@ export class TransactionListComponent implements OnInit{
   private applyFiltersAndSorting(): void {
     let result = [...this.transactions];
 
-    // Filter po kind-u ako nije "All"
-    if (this.selectedKind && this.selectedKind !== 'All') {
+    if (this.selectedKind !== 'All') {
       result = result.filter(t => t.kind === this.selectedKind);
     }
 
-    // Filter po datumu DODATAK
     if (this.fromDate) {
       result = result.filter(t => new Date(t.date) >= this.fromDate!);
     }
+
     if (this.toDate) {
       result = result.filter(t => new Date(t.date) <= this.toDate!);
     }
 
-    // Sortiraj po datumu opadajuće, pa po kategoriji rastuće
     result = result.sort((a, b) => {
       const dateCompare = new Date(b.date).getTime() - new Date(a.date).getTime();
       if (dateCompare !== 0) return dateCompare;
@@ -96,38 +101,38 @@ export class TransactionListComponent implements OnInit{
   }
 
   openCategorizeDialog(transaction: Transaction): void {
-  const dialogRef = this.dialog.open(CategorizeTransactionDialogComponent, {
-    width: '400px',
-    data: { transaction }
-  });
+    const dialogRef = this.dialog.open(CategorizeTransactionDialogComponent, {
+      width: '400px',
+      data: { transaction }
+    });
 
-  dialogRef.afterClosed().subscribe((result) => {
-    if (result) {
-      transaction.category = result.category;
-      transaction.subcategory = result.subcategory;
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        transaction.category = result.category;
+        transaction.subcategory = result.subcategory;
 
-      this.transactionService.updateTransactionCategory(transaction.id, {
-        category: result.category,
-        subcategory: result.subcategory
-      }).subscribe();
-    }
-  });
-}
+        this.transactionService.updateTransactionCategory(transaction.id, {
+          category: result.category,
+          subcategory: result.subcategory
+        }).subscribe();
+      }
+    });
+  }
 
-    openSplitDialog(transaction: Transaction): void {
-      const dialogRef = this.dialog.open(SplitTransactionDialogComponent, {
-        width: '500px',
-        data: transaction
-      });
+  openSplitDialog(transaction: Transaction): void {
+    const dialogRef = this.dialog.open(SplitTransactionDialogComponent, {
+      width: '500px',
+      data: transaction
+    });
 
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result && result.length) {
-          this.transactionService.splitTransaction(transaction.id, result).subscribe(() => {
-            this.onSplitCompleted(); // osveži listu
-          });
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.length) {
+        this.transactionService.splitTransactionApiStyle(transaction.id, result).subscribe(() => {
+          this.onSplitCompleted();
+        });
+      }
+    });
+  }
 
   toggleMultiSelect(): void {
     this.isMultiSelectMode = true;
@@ -140,10 +145,8 @@ export class TransactionListComponent implements OnInit{
   }
 
   openMultiCategorizationDialog(): void {
-    // Filtriramo sve selektovane transakcije
     const selectedTransactions = this.filteredTransactions.filter(t => t.selected);
 
-    // Otvaramo dijalog i prosleđujemo broj selektovanih transakcija
     const dialogRef = this.dialog.open(CategorizeMultipleTransactionsDialogComponent, {
       data: {
         selectedCount: selectedTransactions.length,
@@ -151,34 +154,29 @@ export class TransactionListComponent implements OnInit{
       }
     });
 
-    // Nakon što se dijalog zatvori, obrađujemo rezultat
     dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          // Kreiramo niz PATCH zahteva za svaku transakciju
-          const updateRequests = selectedTransactions.map(t => {
-            return this.transactionService.updateTransactionCategory(t.id, {
-              category: result.category,
-              subcategory: result.subcategory || ''
-            });
+      if (result) {
+        const updateRequests = selectedTransactions.map(t => {
+          return this.transactionService.updateTransactionCategory(t.id, {
+            category: result.category,
+            subcategory: result.subcategory || ''
+          });
+        });
+
+        forkJoin(updateRequests).subscribe(() => {
+          selectedTransactions.forEach(t => {
+            t.category = result.category;
+            t.subcategory = result.subcategory || '';
+            t.selected = false;
           });
 
-          // Pokrećemo sve update zahteve paralelno
-          forkJoin(updateRequests).subscribe(() => {
-            // Kada su svi PATCH-ovi uspešni, ažuriramo lokalno stanje
-            selectedTransactions.forEach(t => {
-              t.category = result.category;
-              t.subcategory = result.subcategory || '';
-              t.selected = false;
-            });
-
-            // Isključujemo višestruki mod selekcije
-            this.isMultiSelectMode = false;
-          });
-        }
-      });
+          this.isMultiSelectMode = false;
+        });
+      }
+    });
   }
 
-  hasSelectedTransactions():boolean{
+  hasSelectedTransactions(): boolean {
     return this.filteredTransactions.some(t => t.selected);
   }
 
@@ -192,9 +190,8 @@ export class TransactionListComponent implements OnInit{
   onSplitCompleted(): void {
     setTimeout(() => {
       this.refreshTransactions();
-    }, 300); // 300ms pauze da json-server stigne da upiše sve
+    }, 300);
   }
-
 
   onDateRangeSelected(range: { from: Date | null; to: Date | null }): void {
     this.currentPage = 1;
@@ -202,17 +199,6 @@ export class TransactionListComponent implements OnInit{
     this.toDate = range.to;
     this.applyFiltersAndSorting();
   }
-
-  // onFiltersReset(): void {
-  //   this.selectedKind = 'All';
-  //   this.fromDate = null;
-  //   this.toDate = null;
-  //   this.currentPage = 1;
-  //   this.applyFiltersAndSorting();
-  // }
-
-
-  showKindFilter: boolean = false;
 
   toggleKindFilter(): void {
     this.showKindFilter = !this.showKindFilter;
@@ -225,7 +211,36 @@ export class TransactionListComponent implements OnInit{
       this.showKindFilter = false;
     }
   }
-  //Paginacija:
+  
+
+  expandedTransactionId: string | null = null;
+
+  toggleAccordion(id: string): void {
+    console.log('Toggled accordion for ID:', id);
+    const tx = this.paginatedTransactions.find(t => t.id === id);
+    console.log('Transaction:', tx);
+    console.log('Splits:', tx?.splits);
+    this.expandedTransactionId = this.expandedTransactionId === id ? null : id;
+  }
+
+  get displayedColumns(): string[] {
+    return this.isMultiSelectMode
+      ? ['select', 'beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']
+      : ['beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split'];
+  }
+  getSplitLabel(catcode: string): { labelType: 'Category' | 'Subcategory', label: string } {
+    const category = this.transactionsCategories.find(c => c.code === catcode);
+    if (!category) return { labelType: 'Category', label: catcode }; // fallback
+
+    if (category.parentCode) {
+      return { labelType: 'Subcategory', label: category.name };
+    } else {
+      return { labelType: 'Category', label: category.name };
+    }
+  }
+
+  
+  // Paginacija
   currentPage: number = 1;
   transactionsPerPage: number = 10;
 
@@ -246,26 +261,24 @@ export class TransactionListComponent implements OnInit{
   }
 
   get visiblePageNumbers(): (number | '...')[] {
-      const total = this.totalPages;
-      const current = this.currentPage;
-      const delta = 1;
-      const range: (number | '...')[] = [];
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const delta = 1;
+    const range: (number | '...')[] = [];
 
-      const left = Math.max(2, current - delta);
-      const right = Math.min(total - 1, current + delta);
+    const left = Math.max(2, current - delta);
+    const right = Math.min(total - 1, current + delta);
 
-      range.push(1);
-      if (left > 2) range.push('...');
+    range.push(1);
+    if (left > 2) range.push('...');
 
-      for (let i = left; i <= right; i++) {
-        range.push(i);
-      }
+    for (let i = left; i <= right; i++) {
+      range.push(i);
+    }
 
     if (right < total - 1) range.push('...');
     if (total > 1) range.push(total);
 
     return range;
   }
-  //
-  
 }

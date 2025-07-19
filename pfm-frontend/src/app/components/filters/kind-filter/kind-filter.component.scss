@@ -55,8 +55,9 @@
 
 // Labela
 ::ng-deep .kind-filter-label {
-  color: $primary-color !important;
+  color: $secondary-color !important;
   background-color: $card-color !important;
+  font-size: larger;
 }
 
 // Polje koje prikazuje selektovanu vrednost

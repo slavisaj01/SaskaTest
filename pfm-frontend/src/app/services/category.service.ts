@@ -13,7 +13,6 @@ export class CategoryService {
   return this.http.get<any[]>('http://localhost:3000/categories').pipe(
      map((data) =>
       data.map((cat) => ({
-        id: cat.id,
         code: cat.code,
         name: cat.name,
         parentCode: cat['parent-code'] || null
