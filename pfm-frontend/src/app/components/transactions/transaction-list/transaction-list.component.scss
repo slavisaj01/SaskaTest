@@ -335,3 +335,41 @@
     }
   }
 }
+
+app-charts-overview {
+  margin: 16px 0 32px;
+  display: block;
+}
+
+.date-picker-bar {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+
+  app-date-filter {
+    background: #1a1a1a;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    display: flex;
+    gap: 1rem;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    align-items: center;
+  }
+}
+
+.graph-filters-row {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 0 2rem;
+  gap: 1rem;
+
+  .graph-date-filter {
+    background: #1a1a1a;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  }
+}

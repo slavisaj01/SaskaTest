@@ -2,12 +2,17 @@
 
 .dialog-container {
   background-color: #2a2a2a;
-  padding: $spacing-unit * 3;
-  border-radius: $border-radius + 2px;
-  border: 3px solid $primary-color;
+  padding: $spacing-unit * 2;
   color: $text-color !important;
   font-family: $font-family;
-  overflow: hidden;
+  box-sizing: border-box;
+  max-height: fit-content;
+  .dialog-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
   h2 {
   font-weight: 700;
   font-size: 1.8rem;
@@ -63,7 +68,7 @@
       background-color: $card-color !important;
     }
 
-    // dodatno za notched-outline da ostane samo plavi okvir:
+    
   .mat-mdc-form-field:not(.mat-form-field-disabled) .mdc-notched-outline {
     border-color: $primary-color !important;
     background-color: transparent !important;
@@ -73,7 +78,7 @@
     border-color: $primary-color !important;
   }
 
-  // isključi line ripple ako koristiš variantu s underline
+
   .mat-mdc-form-field .mdc-line-ripple {
     display: none !important;
   }
@@ -157,3 +162,10 @@
 .full-width {
   width: 100%;
 }
+
+.mat-mdc-dialog-container-with-actions{
+  border: 3px solid $primary-color;
+  border-radius: 32px;
+}
+
+

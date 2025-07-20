@@ -1,0 +1,66 @@
+<div class="charts-layout">
+  <!-- Leva kolona sa karticama -->
+  <div class="cards-column">
+    @for (card of cards; track card.id) {
+      <div class="card-box">
+        <img [src]="card.bgImage" class="card-image" />
+        <div class="card-content">
+          <div class="card-row">
+            <div>
+              <p class="card-label">Name</p>
+              <p class="card-value">{{ card.name }}</p>
+            </div>
+            <img [src]="card.logo" class="card-avatar" />
+          </div>
+          <div class="card-row">
+            <div>
+              <p class="card-label">Card Number</p>
+              <p class="card-value">{{ card.number }}</p>
+            </div>
+          </div>
+          <div class="card-row">
+            <div>
+              <p class="card-label">Valid</p>
+              <p class="card-value">{{ card.valid }}</p>
+            </div>
+            <div>
+              <p class="card-label">Expiry</p>
+              <p class="card-value">{{ card.expiry }}</p>
+            </div>
+            <div>
+              <p class="card-label">CVV</p>
+              <p class="card-value">···</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Desna kolona sa grafikom -->
+  <div class="chart-column">
+    <!-- Gornji desni ugao: filter za chart type -->
+    <div class="chart-header">
+      <mat-form-field appearance="fill" class="chart-type-select" floatLabel="auto">
+        <mat-select [(value)]="selectedChart" disableRipple>
+          @for (type of chartTypes; track type.value) {
+            <mat-option [value]="type.value">{{ type.label }}</mat-option>
+          }
+        </mat-select>
+        <mat-select-trigger>
+          <button mat-button class="filter-btn">
+            <mat-icon>insert_chart</mat-icon>
+            {{ selectedChartLabel }}
+          </button>
+        </mat-select-trigger>
+      </mat-form-field>
+    </div>
+
+    <!-- Prikaz grafikona -->
+    <div class="chart-content">
+      @if (selectedChart === 'treemap') {
+        <app-treemap-graph [transactions]="transactions" />
+      }
+    </div>
+  </div>
+</div>

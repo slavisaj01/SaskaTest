@@ -4,35 +4,32 @@ import { TransactionService } from '../../../services/transaction.service';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
+
 import { KindFilterComponent } from '../../filters/kind-filter/kind-filter.component';
+import { DateFilterComponent } from '../../filters/date-filter/date-filter.component';
+import { ChartsOverviewComponent } from '../../graphs/charts-overview/charts-overview.component';
 import { CategorizeTransactionDialogComponent } from '../../dialogs/categorize-transaction-dialog/categorize-transaction-dialog.component';
 import { CategorizeMultipleTransactionsDialogComponent } from '../../dialogs/categorize-multiple-transactions-dialog/categorize-multiple-transactions-dialog.component';
 import { SplitTransactionDialogComponent } from '../../dialogs/split-transaction-dialog/split-transaction-dialog.component';
-
+import { MatIcon } from '@angular/material/icon';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-transaction-list',
+  standalone: true,
   imports: [
-    MatListModule,
-    MatIconModule,
-    MatCardModule,
-    MatChipsModule,
-    MatButtonModule,
-    FormsModule,
-    MatCheckboxModule,
-    MatTableModule,
+    KindFilterComponent,
+    DateFilterComponent,
+    ChartsOverviewComponent,
+    MatIcon,
+    MatCheckbox,
     CommonModule,
-    KindFilterComponent
+    MatTableModule,
+    FormsModule
   ],
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.scss'
@@ -42,13 +39,20 @@ export class TransactionListComponent implements OnInit {
   filteredTransactions: Transaction[] = [];
   transactionsCategories: Category[] = [];
 
+  // Filteri
   kinds: string[] = [];
   selectedKind: string = 'All';
-  isMultiSelectMode: boolean = false;
   fromDate: Date | null = null;
   toDate: Date | null = null;
-
   showKindFilter: boolean = false;
+
+  // Stanja
+  isMultiSelectMode = false;
+  expandedTransactionId: string | null = null;
+
+  // Paginacija
+  currentPage = 1;
+  transactionsPerPage = 10;
 
   constructor(
     private transactionService: TransactionService,
@@ -60,8 +64,8 @@ export class TransactionListComponent implements OnInit {
   ngOnInit(): void {
     this.transactionService.getTransactions().subscribe((data) => {
       this.transactions = data.map(t => ({ ...t, selected: false }));
-      this.kinds = [...new Set(data.map(t => t.kind))];
-      this.applyFiltersAndSorting();
+      this.kinds = [...new Set(this.transactions.map(t => t.kind))];
+      this.applyAllFilters();
     });
 
     this.categoryService.getCategories().subscribe((categories) => {
@@ -69,14 +73,27 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
-
+  // -------------------------
+  // FILTERI
+  // -------------------------
   onKindSelected(kind: string): void {
     this.currentPage = 1;
     this.selectedKind = kind;
-    this.applyFiltersAndSorting();
+    this.applyAllFilters();
   }
 
-  private applyFiltersAndSorting(): void {
+  onDateRangeSelected(range: { from: Date | null; to: Date | null }): void {
+    this.currentPage = 1;
+    this.fromDate = range.from;
+    this.toDate = range.to;
+    this.applyAllFilters();
+  }
+
+  toggleKindFilter(): void {
+    this.showKindFilter = !this.showKindFilter;
+  }
+
+  private applyAllFilters(): void {
     let result = [...this.transactions];
 
     if (this.selectedKind !== 'All') {
@@ -91,18 +108,18 @@ export class TransactionListComponent implements OnInit {
       result = result.filter(t => new Date(t.date) <= this.toDate!);
     }
 
-    result = result.sort((a, b) => {
-      const dateCompare = new Date(b.date).getTime() - new Date(a.date).getTime();
-      if (dateCompare !== 0) return dateCompare;
-      return a.category.localeCompare(b.category);
-    });
+    result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     this.filteredTransactions = result;
   }
 
+  // -------------------------
+  // DIALOGI
+  // -------------------------
   openCategorizeDialog(transaction: Transaction): void {
     const dialogRef = this.dialog.open(CategorizeTransactionDialogComponent, {
-      width: '400px',
+      width: '90vw',
+      maxWidth: '400px',
       data: { transaction }
     });
 
@@ -121,12 +138,13 @@ export class TransactionListComponent implements OnInit {
 
   openSplitDialog(transaction: Transaction): void {
     const dialogRef = this.dialog.open(SplitTransactionDialogComponent, {
-      width: '500px',
+      width: '90vw',
+      maxWidth: '500px',
       data: transaction
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.length) {
+      if (result?.length) {
         this.transactionService.splitTransactionApiStyle(transaction.id, result).subscribe(() => {
           this.onSplitCompleted();
         });
@@ -134,20 +152,12 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
-  toggleMultiSelect(): void {
-    this.isMultiSelectMode = true;
-    this.filteredTransactions.forEach(t => (t.selected = false));
-  }
-
-  cancelMultiSelect(): void {
-    this.isMultiSelectMode = false;
-    this.filteredTransactions.forEach(t => (t.selected = false));
-  }
-
   openMultiCategorizationDialog(): void {
     const selectedTransactions = this.filteredTransactions.filter(t => t.selected);
 
     const dialogRef = this.dialog.open(CategorizeMultipleTransactionsDialogComponent, {
+      width: '90vw',
+      maxWidth: '400px',
       data: {
         selectedCount: selectedTransactions.length,
         transactions: selectedTransactions
@@ -156,12 +166,12 @@ export class TransactionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const updateRequests = selectedTransactions.map(t => {
-          return this.transactionService.updateTransactionCategory(t.id, {
+        const updateRequests = selectedTransactions.map(t =>
+          this.transactionService.updateTransactionCategory(t.id, {
             category: result.category,
             subcategory: result.subcategory || ''
-          });
-        });
+          })
+        );
 
         forkJoin(updateRequests).subscribe(() => {
           selectedTransactions.forEach(t => {
@@ -176,78 +186,59 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
+  // -------------------------
+  // MULTI SELECT
+  // -------------------------
+  toggleMultiSelect(): void {
+    this.isMultiSelectMode = true;
+    this.filteredTransactions.forEach(t => t.selected = false);
+  }
+
+  cancelMultiSelect(): void {
+    this.isMultiSelectMode = false;
+    this.filteredTransactions.forEach(t => t.selected = false);
+  }
+
   hasSelectedTransactions(): boolean {
     return this.filteredTransactions.some(t => t.selected);
+  }
+
+  // -------------------------
+  // SPLIT / ACCORDION
+  // -------------------------
+  toggleAccordion(id: string): void {
+    this.expandedTransactionId = this.expandedTransactionId === id ? null : id;
+  }
+
+  getSplitLabel(catcode: string): { labelType: 'Category' | 'Subcategory', label: string } {
+    const category = this.transactionsCategories.find(c => c.code === catcode);
+    if (!category) return { labelType: 'Category', label: catcode };
+
+    return category.parentCode
+      ? { labelType: 'Subcategory', label: category.name }
+      : { labelType: 'Category', label: category.name };
+  }
+
+  // -------------------------
+  // REFRESH
+  // -------------------------
+  onSplitCompleted(): void {
+    setTimeout(() => this.refreshTransactions(), 300);
   }
 
   refreshTransactions(): void {
     this.transactionService.getTransactions().subscribe((data) => {
       this.transactions = data.map(t => ({ ...t, selected: false }));
-      this.applyFiltersAndSorting();
+      this.applyAllFilters();
     });
   }
 
-  onSplitCompleted(): void {
-    setTimeout(() => {
-      this.refreshTransactions();
-    }, 300);
-  }
-
-  onDateRangeSelected(range: { from: Date | null; to: Date | null }): void {
-    this.currentPage = 1;
-    this.fromDate = range.from;
-    this.toDate = range.to;
-    this.applyFiltersAndSorting();
-  }
-
-  toggleKindFilter(): void {
-    this.showKindFilter = !this.showKindFilter;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    const clickedInside = this.elementRef.nativeElement.contains(event.target);
-    if (!clickedInside && this.showKindFilter) {
-      this.showKindFilter = false;
-    }
-  }
-  
-
-  expandedTransactionId: string | null = null;
-
-  toggleAccordion(id: string): void {
-    console.log('Toggled accordion for ID:', id);
-    const tx = this.paginatedTransactions.find(t => t.id === id);
-    console.log('Transaction:', tx);
-    console.log('Splits:', tx?.splits);
-    this.expandedTransactionId = this.expandedTransactionId === id ? null : id;
-  }
-
-  get displayedColumns(): string[] {
-    return this.isMultiSelectMode
-      ? ['select', 'beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']
-      : ['beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split'];
-  }
-  getSplitLabel(catcode: string): { labelType: 'Category' | 'Subcategory', label: string } {
-    const category = this.transactionsCategories.find(c => c.code === catcode);
-    if (!category) return { labelType: 'Category', label: catcode }; // fallback
-
-    if (category.parentCode) {
-      return { labelType: 'Subcategory', label: category.name };
-    } else {
-      return { labelType: 'Category', label: category.name };
-    }
-  }
-
-  
-  // Paginacija
-  currentPage: number = 1;
-  transactionsPerPage: number = 10;
-
+  // -------------------------
+  // PAGINACIJA
+  // -------------------------
   get paginatedTransactions(): Transaction[] {
     const start = (this.currentPage - 1) * this.transactionsPerPage;
-    const end = start + this.transactionsPerPage;
-    return this.filteredTransactions.slice(start, end);
+    return this.filteredTransactions.slice(start, start + this.transactionsPerPage);
   }
 
   get totalPages(): number {
@@ -272,13 +263,30 @@ export class TransactionListComponent implements OnInit {
     range.push(1);
     if (left > 2) range.push('...');
 
-    for (let i = left; i <= right; i++) {
-      range.push(i);
-    }
-
+    for (let i = left; i <= right; i++) range.push(i);
     if (right < total - 1) range.push('...');
     if (total > 1) range.push(total);
 
     return range;
+  }
+
+  // -------------------------
+  // KLIK VAN FILTERA
+  // -------------------------
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+    if (!clickedInside && this.showKindFilter) {
+      this.showKindFilter = false;
+    }
+  }
+
+  // -------------------------
+  // KOLONE
+  // -------------------------
+  get displayedColumns(): string[] {
+    return this.isMultiSelectMode
+      ? ['select', 'beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split']
+      : ['beneficiaryName', 'kind', 'direction', 'date', 'amount', 'category', 'split'];
   }
 }

@@ -27,7 +27,7 @@ export class TransactionService {
             currency: item.currency,
             kind: item.kind,
             isSplit: item['isSplit'] ?? false,
-            splits: item.splits ?? [], // obavezno!
+            splits: item.splits ?? [], 
             category: item.category ?? '',
             subcategory: item.subcategory ?? '',
             selected: false

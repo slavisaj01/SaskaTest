@@ -3,12 +3,13 @@
 .dialog-container {
   background-color: #2a2a2a;
   padding: $spacing-unit * 3;
-  border-radius: $border-radius + 2px;
-  border: 3px solid $primary-color;
   color: $text-color !important;
   font-family: $font-family;
   overflow: hidden;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   padding-left: $spacing-unit * 4;
   padding-right: $spacing-unit * 4;
   box-sizing: border-box;
@@ -29,7 +30,7 @@
   .styled-field {
     width: 100%;
     margin-bottom: $spacing-unit * 2;
-
+    
     .mat-mdc-form-field-flex {
       background-color: transparent !important;
       border: none !important;
@@ -161,4 +162,10 @@
 .category-select-panel::-webkit-scrollbar-track {
   background: transparent;
 }
+
+.cdk-dialog-container{
+  border: 3px solid $primary-color;
+  border-radius: 32px;
+}
+
 
