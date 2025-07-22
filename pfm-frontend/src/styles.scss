@@ -1,22 +1,6 @@
 @use '@angular/material' as mat;
 @use 'styles/variables.scss' as *;
 
-:root {
-  @include mat.select-overrides((
-    panel-background-color: $card-color,
-    enabled-trigger-text-color: $primary-color,
-    disabled-trigger-text-color: $muted-text-color,
-    placeholder-text-color: $muted-text-color,
-    enabled-arrow-color: $primary-color,
-    disabled-arrow-color: $muted-text-color,
-    focused-arrow-color: $primary-color,
-    invalid-arrow-color: $error-color,
-    trigger-text-font: $font-family,
-    trigger-text-size: 14px,
-    trigger-text-weight: 500,
-    arrow-transform: rotate(0deg) 
-  ));
-}
 
 /* Global scrollbar styling */
 body::-webkit-scrollbar {

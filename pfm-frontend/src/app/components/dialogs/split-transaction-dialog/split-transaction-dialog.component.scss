@@ -250,6 +250,10 @@
   border: 3px solid $primary-color;
   border-radius: 32px;
 }
+
+.mat-mdc-dialog-surface{
+  border-radius: 29px;
+}
 .mat-mdc-form-field-focus-overlay{
    background-color: #121212 !important;
    color: $text-color !important;
@@ -265,4 +269,8 @@
 }
 .mat-mdc-form-field-infix{
   color: white !important;
+}
+
+.mat-mdc-dialog-content.mdc-dialog__content{
+  padding: 4px;
 }

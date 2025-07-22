@@ -87,6 +87,9 @@
     .filter-btn {
       background: #333;
       color: white;
+      .fil{
+        transform: translateY(-15px);
+      }
     }
   }
 }
@@ -99,7 +102,7 @@
 .filter-btn {
   border-radius: 24px;
   padding: 6px 16px;
-  font-weight: 600;
+  //font-weight: 600;
 }
 
 .filter-dropdown {
@@ -364,12 +367,48 @@ app-charts-overview {
   gap: 1rem;
 
   .graph-date-filter {
+    margin-top: 0;
     background: #1a1a1a;
-    padding: 1rem 1.5rem;
     border-radius: 1rem;
     display: flex;
     gap: 1rem;
     align-items: center;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  }
+}
+app-charts-overview{
+  margin-bottom: 0;
+}
+
+.graph-filters-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 0;
+
+  .graph-date-filter {
+    display: flex;
+    gap: 1rem;
+
+    mat-form-field {
+      background-color: #1a1a1a;
+      border-radius: 6px;
+      color: white;
+
+      .mat-mdc-form-field-infix {
+        color: white;
+      }
+
+      .mat-mdc-floating-label {
+        color: #8a8a8a;
+      }
+
+      input {
+        color: white;
+      }
+
+      .mat-datepicker-toggle {
+        color: white;
+      }
+    }
   }
 }

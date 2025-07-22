@@ -37,29 +37,37 @@
     }
   </div>
 
-  <!-- Desna kolona sa grafikom -->
+  <!-- Desna kolona sa grafikonom -->
   <div class="chart-column">
-    <!-- Gornji desni ugao: filter za chart type -->
-    <div class="chart-header">
-      <mat-form-field appearance="fill" class="chart-type-select" floatLabel="auto">
-        <mat-select [(value)]="selectedChart" disableRipple>
-          @for (type of chartTypes; track type.value) {
-            <mat-option [value]="type.value">{{ type.label }}</mat-option>
-          }
-        </mat-select>
-        <mat-select-trigger>
-          <button mat-button class="filter-btn">
-            <mat-icon>insert_chart</mat-icon>
-            {{ selectedChartLabel }}
-          </button>
-        </mat-select-trigger>
-      </mat-form-field>
+    <div class="chart-top-controls">
+      <mat-select
+        [(value)]="selectedChart"
+        disableRipple
+        panelClass="chart-type-panel"
+        class="chart-type-button"
+      >
+        @for (type of chartTypes; track type.value) {
+          <mat-option [value]="type.value">{{ type.label }}</mat-option>
+        }
+      </mat-select>
+      <app-date-filter
+        (dateRangeSelected)="dateRangeSelected.emit($event)"
+        class="inline-date-filter"
+      ></app-date-filter>
     </div>
 
-    <!-- Prikaz grafikona -->
+    <!-- Prikaz odabranog grafikona ili empty state -->
     <div class="chart-content">
       @if (selectedChart === 'treemap') {
-        <app-treemap-graph [transactions]="transactions" />
+        @if (hasDataToDisplay) {
+          <app-treemap-graph [transactions]="transactions" />
+        } @else {
+          <div class="empty-state">
+            <img src="../../../../assets/group2.png" alt="No data" />
+            <h2>No categorized transactions available</h2>
+            <p>Try selecting a different date range or categorize your transactions.</p>
+          </div>
+        }
       }
     </div>
   </div>

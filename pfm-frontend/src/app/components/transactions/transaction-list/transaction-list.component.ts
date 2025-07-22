@@ -23,7 +23,6 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     KindFilterComponent,
-    DateFilterComponent,
     ChartsOverviewComponent,
     MatIcon,
     MatCheckbox,

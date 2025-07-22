@@ -14,8 +14,6 @@ export class TransactionService {
     return this.http.get<any[]>('http://localhost:3000/transactions').pipe(
       map((data) =>
         data.map((item) => {
-          console.log('Raw item:', item); // šta vraća JSON server
-
           const transaction: Transaction = {
             id: item.id,
             beneficiaryName: item['beneficiary-name'] || item.beneficiaryName,
@@ -32,8 +30,6 @@ export class TransactionService {
             subcategory: item.subcategory ?? '',
             selected: false
           };
-
-          console.log('Parsed transaction:', transaction); // parsirano
           return transaction;
         })
       )

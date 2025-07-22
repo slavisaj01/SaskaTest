@@ -1,14 +1,12 @@
 <div class="transaction-list-container">
-  <!-- GRAFIČKI PRIKAZ -->
-  <app-charts-overview [transactions]="filteredTransactions" />
+  
 
-  <!-- FILTERI ISPOD GRAFA -->
-  <div class="graph-filters-row">
-    <app-date-filter
-      (dateRangeSelected)="onDateRangeSelected($event)"
-      class="graph-date-filter"
-    ></app-date-filter>
-  </div>
+  <!-- GRAFIČKI PRIKAZ + KONTROLE -->
+<app-charts-overview
+  [transactions]="filteredTransactions"
+  (dateRangeSelected)="onDateRangeSelected($event)">
+</app-charts-overview>
+
   <!-- NASLOV I FILTERI -->
   <div class="header-row">
     <h2>Transaction History</h2>
@@ -16,7 +14,7 @@
       <input type="text" placeholder="Search..." />
       <div class="filter-container">
         <button mat-stroked-button class="filter-btn" (click)="toggleKindFilter()">
-          <mat-icon>filter_list</mat-icon> Filters
+          <mat-icon>filter_list</mat-icon> <span class="fil">Filters</span>
         </button>
 
         @if (showKindFilter) {

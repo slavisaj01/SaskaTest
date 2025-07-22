@@ -1,15 +1,10 @@
-
 <div class="date-filter-wrapper">
-  <mat-form-field class="date-field" appearance="fill">
-    <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" (dateChange)="onDateChange()" placeholder="From date"/>
-    <mat-datepicker-toggle matSuffix [for]="fromPicker" />
-    <mat-datepicker #fromPicker panelClass="custom-datepicker" />
-  </mat-form-field>
-
-  <mat-form-field class="date-field" appearance="fill">
-    <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" (dateChange)="onDateChange()" placeholder="From date"/>
-    <mat-datepicker-toggle matSuffix [for]="toPicker" />
-    <mat-datepicker #toPicker panelClass="custom-datepicker" />
-  </mat-form-field>
+  <mat-form-field appearance="fill" class="date-range-field">
+  <mat-date-range-input [rangePicker]="picker">
+    <input matStartDate [(ngModel)]="dateRange.begin" (dateChange)="onDateChange()" placeholder="Start date">
+    <input matEndDate [(ngModel)]="dateRange.end" (dateChange)="onDateChange()" placeholder="End date">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker" />
+  <mat-date-range-picker #picker panelClass="custom-datepicker" />
+</mat-form-field>
 </div>
-
