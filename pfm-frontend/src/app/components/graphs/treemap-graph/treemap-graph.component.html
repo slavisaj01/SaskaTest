@@ -1,3 +1,9 @@
 <div class="treemap-container">
-  <div echarts [options]="chartOptions" class="treemap-chart"></div>
+  <echarts
+    [options]="chartOptions"
+    [merge]="chartOptions"
+    [autoResize]="true"
+    (chartInit)="onChartInit($event)"
+    class="treemap-chart"
+  ></echarts>
 </div>

@@ -3,10 +3,11 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { Transaction } from '../../../models/transaction';
 import { EChartsOption } from 'echarts/types/dist/shared';
 import { groupBy, sumBy } from 'lodash';
+import type { ECharts } from 'echarts/core';
+
 
 @Component({
   selector: 'app-treemap-graph',
-  standalone: true,
   imports: [NgxEchartsModule],
   templateUrl: './treemap-graph.component.html',
   styleUrl: './treemap-graph.component.scss',
@@ -37,6 +38,13 @@ export class TreemapGraphComponent {
     '#F1948A', // Coral
     '#A569BD', // Grape Purple
   ];
+
+  public echartsInstance?: ECharts;
+
+  onChartInit(instance: ECharts): void {
+    this.echartsInstance = instance;
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions'] && this.transactions) {
@@ -81,53 +89,61 @@ export class TreemapGraphComponent {
         formatter: (info: any) => `${info.name}: ${info.value.toFixed(2)} RSD`,
       },
       series: [
-        {
-          type: 'treemap',
-          data,
-          leafDepth: 1,
-          roam: false,
-          visibleMin: 0,
-          label: {
-            show: true,
-            formatter: (params: any) => `${params.name}\n${params.value.toFixed(2)} RSD`,
-            position: 'inside',
-            color: '#fff',
-            fontSize: 12,
-          },
-          labelLayout: {
-            hideOverlap: false,
-          },
-          breadcrumb: {
-            show: true,
-            itemStyle: {
-              color: '#333333',
-              borderColor: '#3D58ED',
-              borderWidth: 1,
-            },
-            emphasis: {
-              itemStyle: {
-                color: '#3D58ED',
-                borderColor: '#3D58ED',
-              },
-            },
-          },
-          levels: [
-            {
-              itemStyle: {
-                borderColor: '#1a1a1a',
-                borderWidth: 2,
-                gapWidth: 3,
-              },
-            },
-            {
-              itemStyle: {
-                gapWidth: 2,
-                borderColorSaturation: 0.6,
-              },
-            },
-          ],
+      {
+        type: 'treemap',
+        data,
+        leafDepth: 1,
+        roam: false,
+        visibleMin: 0,
+        label: {
+          show: true,
+          formatter: (params: any) => `${params.name}\n${params.value.toFixed(2)} RSD`,
+          position: 'inside',
+          color: '#fff',
+          fontSize: 12,
         },
-      ],
+        labelLayout: {
+          hideOverlap: false,
+        },
+        breadcrumb: {
+          show: true,
+          top: 0, 
+          itemStyle: {
+            color: '#3D58ED',
+            borderColor: '#3D58ED',
+            borderWidth: 1,
+          },
+          emphasis: {
+            itemStyle: {
+              color: '#3D58ED',
+              borderColor: '#3D58ED',
+            },
+          },
+        },
+        nodeClick: 'zoomToNode', 
+        animation: false,
+        animationDuration: 0,
+        animationDurationUpdate: 0,
+        animationEasing: 'linear',
+        animationEasingUpdate: 'linear',
+        levels: [
+          {
+            itemStyle: {
+              borderColor: '#1a1a1a',
+              borderWidth: 2,
+              gapWidth: 3,
+            },
+          },
+          {
+            itemStyle: {
+              gapWidth: 2,
+              borderColorSaturation: 0.6,
+            },
+          },
+        ],
+      },
+    ]
+
     };
   }
 
@@ -143,4 +159,6 @@ export class TreemapGraphComponent {
 
     return `rgb(${r},${g},${b})`;
   }
+
+
 }

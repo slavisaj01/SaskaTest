@@ -1,16 +1,15 @@
-<mat-form-field appearance="fill" class="kind-filter-select" style="width: 100%">
-  <mat-label class="kind-filter-label"><strong>Filter by transaction type:</strong></mat-label>
-  <br>
+<mat-form-field appearance="fill" class="styled-field full-width">
+  <mat-label>Filter by transaction type:</mat-label>
+
   <mat-select
     [value]="selectedKind"
     (selectionChange)="onSelectionChange($event.value)"
-    panelClass="kind-filter-select-panel">
-    <mat-option class="kind-filter-option" value="All">All</mat-option>
+    panelClass="category-select-panel">
+    <mat-option class="category-select-option" value="All">All</mat-option>
     @for (kind of kinds; track kind) {
-      <mat-option class="kind-filter-option" [value]="kind">
+      <mat-option class="category-select-option" [value]="kind">
         {{ getLabel(kind) }}
       </mat-option>
     }
   </mat-select>
 </mat-form-field>
-

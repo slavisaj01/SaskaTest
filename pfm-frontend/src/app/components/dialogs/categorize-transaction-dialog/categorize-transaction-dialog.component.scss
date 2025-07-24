@@ -1,7 +1,9 @@
 @use '../../../../styles/variables.scss' as *;
 
 .dialog-container {
-  background-color: #2a2a2a;
+  background-color: rgba(26, 110, 221, 0.2); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: $spacing-unit * 2;
   color: $text-color !important;
   font-family: $font-family;
@@ -16,7 +18,7 @@
   h2 {
   font-weight: 700;
   font-size: 1.8rem;
-  color: white !important;
+  color: #0f111a !important;
   text-align: center;
   margin-bottom: $spacing-unit * 2;
 }
@@ -24,65 +26,76 @@
   .dialog-description {
     color: $muted-text-color;
     margin-bottom: $spacing-unit * 2;
+    text-align: center;
   }
 
   .styled-field {
+  flex: 1 1 30%;
+  min-width: 140px;
+  height: 50px;
+  margin-bottom: $spacing-unit * 2; 
+  .mat-mdc-form-field {
     width: 100%;
-    margin-bottom: $spacing-unit * 2;
+    height: 100%;
+  }
 
-    .mat-mdc-form-field-flex {
-      background-color: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-
-    .mat-mdc-select-value {
-      color: $text-color !important;
-      font-weight: 500;
-    }
-
-    .mat-mdc-form-field-label {
-      color: $muted-text-color !important;
-      font-size: 14px;
-    }
-
-    .mat-mdc-select-arrow {
-      color: $primary-color !important;
-    }
-
-    .mat-mdc-form-field-focus-overlay {
-      background-color: transparent !important;
-    }
-
-    .mdc-notched-outline,
-    .mat-mdc-form-field-outline {
-      display: none !important;
-    }
-
-    .mat-mdc-text-field-wrapper {
-      background-color: transparent !important;
-      padding: 0;
-    }
-
-    .mat-mdc-form-field-subscript-wrapper {
-      background-color: $card-color !important;
-    }
-
-    
-  .mat-mdc-form-field:not(.mat-form-field-disabled) .mdc-notched-outline {
-    border-color: $primary-color !important;
+  .mat-mdc-text-field-wrapper {
     background-color: transparent !important;
+    border-radius: 12px;
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
-  .mat-mdc-form-field:hover .mdc-notched-outline {
-    border-color: $primary-color !important;
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 
+  .mat-mdc-select-value,
+  input.mat-input-element {
+    color: white !important;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 
+  .mdc-floating-label {
+    color: $muted-text-color !important;
+    font-size: 13px;
+    top: 50% !important;
+    transform: translateY(-50%) scale(1) !important;
+    transform-origin: left top !important;
+    pointer-events: none;
+  }
+
+  .mdc-floating-label--float-above {
+    top: 8px !important;
+    transform: scale(0.75) translateY(0) !important;
+    color: $muted-text-color !important;
+  }
+
+  .mat-mdc-select-arrow {
+    color: $primary-color !important;
+  }
+
+  .mat-mdc-form-field-outline,
+  .mdc-notched-outline,
+  .mat-mdc-form-field-subscript-wrapper,
   .mat-mdc-form-field .mdc-line-ripple {
     display: none !important;
   }
+
+  .mat-mdc-hint {
+    display: none !important;
   }
+}
 
   .dialog-actions {
     margin-top: $spacing-unit * 2;
@@ -119,29 +132,29 @@
 
 // === Dropdown panel ===
 .category-select-panel {
-  background-color: #0f111a !important;
+  background-color:  #12203d !important;
   color: $text-color !important;
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   padding: 0;
   overflow: hidden;
-  max-height: 250px;
 }
 
 .category-select-option {
   padding: 1rem 1.5rem;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.6;
   background-color: transparent !important;
   color: $text-color !important;
-
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   &:hover {
-    background-color: rgba(255, 255, 255, 0.05) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
   }
 
   &.mat-mdc-selected {
-    background-color: rgba($primary-color, 0.2) !important;
-    color: $primary-color !important;
+    background-color: rgba($primary-color, 0.4) !important;
+    color: white !important;
   }
 }
 
@@ -171,5 +184,33 @@
 .mat-mdc-dialog-surface{
   border-radius: 29px;
 }
+.dialog-actions {
+  .btn-primary,
+  .btn-secondary {
+    height: 40px;
+    font-size: 14px;
+    padding: 0 $spacing-unit * 2;
+  }
+}
 
+.mat-mdc-form-field.styled-field{
+  background-color: #12203df4;
+}
 
+.mat-mdc-select{
+  margin-top: 15px;
+}
+
+.mat-mdc-select-arrow {
+    color: #3D58ED;
+}
+
+::ng-serve .mat-select-panel {
+  transform-origin: bottom center !important;
+  bottom: 100% !important;
+  top: auto !important;
+}
+
+div.mat-mdc-select-panel{
+  max-height: 250px;
+}

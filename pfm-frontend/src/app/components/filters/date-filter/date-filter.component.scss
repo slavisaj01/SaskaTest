@@ -5,13 +5,15 @@
   justify-content: center;
   background-color: transparent;
   border-radius: $border-radius + 6px;
+  width: 100%;
 }
 
 .date-range-field {
   width: 220px;
-  height: 40px;
+  height: 56px;
   padding: 0;
   border: none;
+
   .mat-mdc-form-field-subscript-wrapper,
   .mat-mdc-form-field-outline,
   .mdc-notched-outline {
@@ -24,11 +26,10 @@
   }
 
   .mat-mdc-text-field-wrapper {
-    background-color: #1f1f1f !important;
+    background-color: white !important;
     border-radius: $border-radius + 2px !important;
-    border: 1px solid #2c2f36 !important;
     padding: 0 $spacing-unit;
-    height: 56px;
+    height: 100%;
     display: flex;
     align-items: center;
     transition: border-color 0.2s ease-in-out;
@@ -37,17 +38,20 @@
   .mat-mdc-form-field-infix {
     font-size: 0.95rem !important;
     font-weight: 500 !important;
-    color: $text-color !important;
+    color: black !important;
     padding: $spacing-unit * 0.5 0 !important;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 
   .mat-mdc-input-element {
-    color: $text-color !important;
+    color: black !important;
     caret-color: $primary-color !important;
   }
 
   .mat-mdc-icon-button {
-    color: $text-color !important;
+    color: $primary-color !important;
   }
 
   &:hover .mat-mdc-text-field-wrapper {
@@ -59,27 +63,35 @@
   }
 }
 
+.mat-date-range-input-container {
+  margin-top: 15px;
+}
 
-.mat-datepicker-content-container{
-  background-color: #1f1f1f;
-  border-radius:  $border-radius;
-  color: white;
-  .mat-calendar-content{
-    color: white !important;
+// Datepicker panel
+.mat-datepicker-content-container {
+  background-color: white;
+  border-radius: $border-radius;
+  color: black;
+
+  .mat-calendar-content {
+    color: black !important;
   }
 }
 
 .mat-calendar-body-in-range {
   background-color: rgba(61, 88, 237, 0.2) !important; 
-  color: white !important; 
+  color: black !important;
 }
 
 .mat-calendar-body-range-start,
 .mat-calendar-body-range-end {
   background-color: #3D58ED !important; 
-  color: white !important;
+  color: black !important;
+}
+.mat-calendar-body-cell{
+  color: black !important;
 }
 
-.mat-date-range-input-container{
-  margin-top: 15px;
+.mat-mdc-form-field{
+  width: 100%;
 }

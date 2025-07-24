@@ -1,128 +1,130 @@
 @use '../../../../styles/variables.scss' as *;
 
-//Panel pozadina i padding
-//Selektovano polje da bude crno pozadine i plav tekst
-::ng-deep .mat-mdc-select-trigger {
-  background-color: $card-color !important;
-  color: $primary-color !important;
-  border-radius: $border-radius;
+:host {
+  display: block;
+  width: 100%;
 }
 
-//Uklanjanje bele pozadine oko mat-select (outline)
-::ng-deep .mat-mdc-form-field-flex {
-  background-color: $card-color !important;
+.styled-field {
+  flex: 1 1 30%;
+  height: 50px;
+  background-color: white;
+  min-width: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .mat-mdc-form-field {
+    width: 100%;
+    height: 100%;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background-color: transparent !important;
+    border-radius: 12px;
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .mat-mdc-select-value,
+  input.mat-input-element {
+    color: black !important;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .mdc-floating-label {
+    color: $muted-text-color !important;
+    font-size: 13px;
+    top: 50% !important;
+    transform: translateY(-50%) scale(1) !important;
+    transform-origin: left top !important;
+    pointer-events: none;
+    
+  }
+
+  .mdc-floating-label--float-above {
+    top: 8px !important;
+    transform: scale(0.75) translateY(0) !important;
+    color: $muted-text-color !important;
+  }
+
+  .mat-mdc-select-arrow {
+    color: $primary-color !important;
+  }
+
+  .mat-mdc-form-field-outline,
+  .mdc-notched-outline,
+  .mat-mdc-form-field-subscript-wrapper,
+  .mat-mdc-form-field .mdc-line-ripple {
+    display: none !important;
+  }
+
+  .mat-mdc-hint {
+    display: none !important;
+  }
 }
 
-//Linija ispod (focus underline) u royal blue
-::ng-deep .mat-mdc-form-field-focus-overlay {
-  background-color: $primary-color !important;
-}
-::ng-deep .mat-mdc-form-field {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-
-::ng-deep .kind-filter-select-panel {
-  background-color: $card-color !important;
-  color: $text-color;
-  border-radius: 12px;
-  padding: 4px 0;
+// === Dropdown panel ===
+.category-select-panel {
+  background-color: whitesmoke !important;
+  color: black !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 0;
+  overflow: hidden;
+  max-height: 250px;
 }
 
-// Sve opcije
-::ng-deep .kind-filter-option {
-  background-color: $card-color !important;
-  font-size: 14px;
-  padding: 8px 16px;
-  color: $primary-color !important; 
+.category-select-option {
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: transparent !important;
+  color: black !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   &:hover {
-
-    color: white !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
   }
 
-  &.mat-selected {
-    background-color: $primary-color !important;
-    color: white;
+  &.mat-mdc-selected {
+    background-color: rgba($primary-color, 0.4) !important;
+    color: black !important;
   }
 }
 
-// Ikonica strelice
-::ng-deep .kind-filter-select .mat-select-arrow {
-  color: $primary-color;
+// === Scrollbar ===
+.category-select-panel::-webkit-scrollbar {
+  width: 8px;
 }
 
-// Labela
-::ng-deep .kind-filter-label {
-  color: $secondary-color !important;
-  background-color: $card-color !important;
-  font-size: larger;
+.category-select-panel::-webkit-scrollbar-thumb {
+  background-color: $muted-text-color;
+  border-radius: 4px;
 }
 
-// Polje koje prikazuje selektovanu vrednost
-::ng-deep .mat-select-value {
-  color: $primary-color !important;
-  background-color: $card-color !important;
+.category-select-panel::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-::ng-deep .mat-mdc-select-trigger{
-  color: $primary-color !important;
-  background-color: $card-color !important;
+.mat-mdc-select{
+    margin-top: 20px;
 }
 
-::ng-deep .mat-form-field{
-  color: $primary-color !important;
-  background-color: $card-color !important;
+.mat-select-panel-animations-enabled.mat-mdc-select-panel.mdc-menu-surface.mdc-menu-surface--open.mat-primary.category-select-panel.ng-star-inserted{
+  background-color: whitesmoke;
 }
-
-
-// Ukloni beli padding (pozadinu oko celog polja)
-::ng-deep .mat-mdc-text-field-wrapper {
-  background-color: $card-color !important;
-  padding: 0 !important;
-}
-
-// Ukloni belu pozadinu iza teksta 
-::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  background-color: $card-color !important;
-}
-
-// Fix za inner select box wrapper
-::ng-deep .mat-mdc-select {
-  background-color: $card-color !important;
-}
-// Spreci hover efekat na form-field wrapperu
-::ng-deep .mat-mdc-form-field:hover .mat-mdc-form-field-flex {
-  background-color: $card-color !important;
-  transition: none !important;
-}
-
-// Spreci ripple efekat 
-::ng-deep .mat-mdc-form-field .mdc-line-ripple {
-  background-color: $primary-color !important;
-}
-
-::ng-deep .mat-mdc-form-field:hover .mdc-line-ripple {
-  background-color: $primary-color !important;
-}
-::ng-deep .mat-mdc-form-field {
-  box-shadow: none !important;
-}
-::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mdc-notched-outline {
-  border-color: $card-color !important;
-  background-color: $card-color !important;
-  transition: none !important;
-}
-
-::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled):hover .mdc-notched-outline {
-  border-color: $card-color !important;
-  background-color: $card-color !important;
-  box-shadow: none !important;
-  transition: none !important;
-}
-
-::ng-deep .mat-mdc-form-field-focus-overlay {
-  background-color: transparent !important;
-}
-

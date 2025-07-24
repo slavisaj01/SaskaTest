@@ -1,12 +1,12 @@
-import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener, viewChild, ViewChild } from '@angular/core';
 import { Transaction } from '../../../models/transaction';
 import { TransactionService } from '../../../services/transaction.service';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
-
+import { trigger, transition, style, animate } from '@angular/animations';
 import { KindFilterComponent } from '../../filters/kind-filter/kind-filter.component';
 import { DateFilterComponent } from '../../filters/date-filter/date-filter.component';
 import { ChartsOverviewComponent } from '../../graphs/charts-overview/charts-overview.component';
@@ -18,38 +18,62 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'app-transaction-list',
   standalone: true,
   imports: [
     KindFilterComponent,
+    DateFilterComponent,
     ChartsOverviewComponent,
     MatIcon,
     MatCheckbox,
     CommonModule,
     MatTableModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule,
+    MatSidenavModule,
+    MatButtonModule
   ],
   templateUrl: './transaction-list.component.html',
-  styleUrl: './transaction-list.component.scss'
+  styleUrl: './transaction-list.component.scss',
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('fadeSlide', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-10px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' }))
+      ])
+    ])
+  ]
+
 })
 export class TransactionListComponent implements OnInit {
+  @ViewChild('filterDrawer') filterDrawer!: MatDrawer;
+
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
   transactionsCategories: Category[] = [];
 
-  // Filteri
   kinds: string[] = [];
   selectedKind: string = 'All';
   fromDate: Date | null = null;
   toDate: Date | null = null;
-  showKindFilter: boolean = false;
 
-  // Stanja
   isMultiSelectMode = false;
   expandedTransactionId: string | null = null;
+  showChartView: boolean = false;
+  drawerOpened = false;
 
-  // Paginacija
+  pendingKind: string = 'All';
+  pendingFromDate: Date | null = null;
+  pendingToDate: Date | null = null;
+
   currentPage = 1;
   transactionsPerPage = 10;
 
@@ -64,6 +88,10 @@ export class TransactionListComponent implements OnInit {
     this.transactionService.getTransactions().subscribe((data) => {
       this.transactions = data.map(t => ({ ...t, selected: false }));
       this.kinds = [...new Set(this.transactions.map(t => t.kind))];
+
+      this.pendingKind = this.selectedKind;
+      this.pendingFromDate = this.fromDate;
+      this.pendingToDate = this.toDate;
       this.applyAllFilters();
     });
 
@@ -77,19 +105,23 @@ export class TransactionListComponent implements OnInit {
   // -------------------------
   onKindSelected(kind: string): void {
     this.currentPage = 1;
-    this.selectedKind = kind;
-    this.applyAllFilters();
+    this.pendingKind = kind;
   }
 
   onDateRangeSelected(range: { from: Date | null; to: Date | null }): void {
     this.currentPage = 1;
-    this.fromDate = range.from;
-    this.toDate = range.to;
-    this.applyAllFilters();
+    this.pendingFromDate = range.from;
+    this.pendingToDate = range.to;
   }
 
   toggleKindFilter(): void {
-    this.showKindFilter = !this.showKindFilter;
+    this.drawerOpened = true;
+    this.filterDrawer.toggle();
+  }
+
+  closeDrawer() {
+    this.drawerOpened = false;
+    this.filterDrawer.close();
   }
 
   private applyAllFilters(): void {
@@ -112,6 +144,30 @@ export class TransactionListComponent implements OnInit {
     this.filteredTransactions = result;
   }
 
+  applyFilters(): void {
+    this.selectedKind = this.pendingKind ?? 'All';
+    this.fromDate = this.pendingFromDate;
+    this.toDate = this.pendingToDate;
+    this.currentPage = 1;
+    this.applyAllFilters(); 
+  }
+
+  onApplyAndClose() {
+    this.applyFilters(); 
+    this.closeDrawer();  
+  }
+
+  clearFilters(): void {
+    this.selectedKind = 'All';
+    this.pendingKind = 'All';
+
+    this.fromDate = null;
+    this.toDate = null;
+    this.pendingFromDate = null;
+    this.pendingToDate = null;
+
+    this.applyFilters();
+  } 
   // -------------------------
   // DIALOGI
   // -------------------------
@@ -145,7 +201,7 @@ export class TransactionListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.length) {
         this.transactionService.splitTransactionApiStyle(transaction.id, result).subscribe(() => {
-          this.onSplitCompleted();
+          this.onSplitCompleted(transaction.id); 
         });
       }
     });
@@ -221,9 +277,20 @@ export class TransactionListComponent implements OnInit {
   // -------------------------
   // REFRESH
   // -------------------------
-  onSplitCompleted(): void {
-    setTimeout(() => this.refreshTransactions(), 300);
-  }
+  onSplitCompleted(transactionId: string): void {
+      setTimeout(() => {
+        this.refreshTransactions();
+        this.expandedTransactionId = transactionId; 
+        
+        setTimeout(() => {
+          const element = this.elementRef.nativeElement.querySelector(`[data-transaction-id="${transactionId}"]`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
+      }, 300);
+    }
+  
 
   refreshTransactions(): void {
     this.transactionService.getTransactions().subscribe((data) => {
@@ -269,16 +336,6 @@ export class TransactionListComponent implements OnInit {
     return range;
   }
 
-  // -------------------------
-  // KLIK VAN FILTERA
-  // -------------------------
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    const clickedInside = this.elementRef.nativeElement.contains(event.target);
-    if (!clickedInside && this.showKindFilter) {
-      this.showKindFilter = false;
-    }
-  }
 
   // -------------------------
   // KOLONE

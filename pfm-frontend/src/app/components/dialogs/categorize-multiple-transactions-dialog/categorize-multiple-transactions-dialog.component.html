@@ -1,7 +1,8 @@
 <div class="dialog-container">
   <h2>Choose category</h2>
 
-  <p class="dialog-description">
+  <mat-dialog-content class="dialog-content">
+    <p class="dialog-description">
     You have selected {{ data.selectedCount }} transactions for multiple categorization
   </p>
 
@@ -22,9 +23,11 @@
       }
     </mat-select>
   </mat-form-field>
+  </mat-dialog-content>
+  
 
-  <div class="dialog-actions">
-    <button mat-button class="btn-secondary" (click)="onCancel()">Cancel</button>
-    <button mat-button class="btn-primary" (click)="onApply()">Apply</button>
-  </div>
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button class="btn-secondary" (click)="onCancel()">Cancel</button>
+    <button class="btn-primary" (click)="onApply()">Apply</button>
+  </mat-dialog-actions>
 </div>

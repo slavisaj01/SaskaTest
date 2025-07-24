@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,7 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   standalone: true,
   imports: [CommonModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './kind-filter.component.html',
-  styleUrl: './kind-filter.component.scss'
+  styleUrl: './kind-filter.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class KindFilterComponent {
   @Input() kinds: string[] = [];

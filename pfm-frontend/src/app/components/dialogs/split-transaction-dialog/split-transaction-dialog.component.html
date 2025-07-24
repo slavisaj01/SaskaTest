@@ -5,17 +5,17 @@
     Please split the transaction into categories:
   </p>
   <div class="split-amount-info" [ngClass]="{ 'error': !isAmountValid() }">
-    @if (!isAmountValid()) {
-      <span>
-        Total amount must equal original transaction amount ({{ originalTransaction.amount | number: '1.2-2' }}).
-        You are {{ amountDifference > 0 ? 'under' : 'over' }} by {{ amountDifference | number: '1.2-2' }}.
-      </span>
-    } @else {
-      <span>
-        Remaining: {{ amountDifference | number: '1.2-2' }}
-      </span>
-    }
-  </div>
+  @if (!isAmountValid()) {
+    <span>
+      Total amount must equal original transaction amount ({{ originalTransaction.amount | number: '1.2-2' }}).
+      You are {{ amountDifference > 0 ? 'under' : 'over' }} by {{ amountDifferenceAbs | number: '1.2-2' }}.
+    </span>
+  } @else {
+    <span>
+      Remaining: {{ amountDifferenceAbs | number: '1.2-2' }}
+    </span>
+  }
+</div>
   <mat-dialog-content class="split-dialog-content">
     @for (split of splits; track split.id) {
       <div class="split-form-group">

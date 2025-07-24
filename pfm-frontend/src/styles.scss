@@ -21,3 +21,8 @@ body {
   scrollbar-width: thin;
   scrollbar-color: $muted-text-color transparent;
 }
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important; 
+  backdrop-filter: blur(2px); 
+  -webkit-backdrop-filter: blur(2px); 
+}

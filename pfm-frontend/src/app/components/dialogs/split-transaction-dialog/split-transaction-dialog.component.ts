@@ -104,7 +104,9 @@ export class SplitTransactionDialogComponent implements OnInit {
   get amountDifference(): number {
     return this.originalTransaction.amount - this.totalSplitAmount;
   }
-
+  get amountDifferenceAbs(): number {
+    return Math.abs(this.amountDifference);
+  }
   applySplits(): void {
     if (!this.isAmountValid()) {
       alert('Total amount of splits must match the original transaction.');

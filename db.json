@@ -14190,7 +14190,18 @@
       "description": "Parking fee",
       "currency": "USD",
       "mcc": 7523,
-      "kind": "pmt"
+      "kind": "pmt",
+      "isSplit": true,
+      "splits": [
+        {
+          "catcode": "5",
+          "amount": 2
+        },
+        {
+          "catcode": "25",
+          "amount": 0.4
+        }
+      ]
     },
     {
       "id": "89154942",
@@ -14236,7 +14247,18 @@
       "description": "Loan Payment",
       "currency": "USD",
       "mcc": null,
-      "kind": "pmt"
+      "kind": "pmt",
+      "isSplit": true,
+      "splits": [
+        {
+          "catcode": "22",
+          "amount": 60
+        },
+        {
+          "catcode": "5",
+          "amount": 1.8
+        }
+      ]
     },
     {
       "id": "35924168",
@@ -14260,7 +14282,18 @@
       "mcc": 5811,
       "kind": "pmt",
       "category": "Food & Dining",
-      "subcategory": "Restaurants"
+      "subcategory": "Restaurants",
+      "isSplit": true,
+      "splits": [
+        {
+          "catcode": "2",
+          "amount": 28
+        },
+        {
+          "catcode": "9",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "id": "48623663",

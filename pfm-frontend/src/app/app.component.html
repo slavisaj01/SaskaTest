@@ -1,8 +1,10 @@
 <div class="layout">
+  <!-- Sidebar -->
   <div class="sidebar" [class.expanded]="isExpanded" (mouseenter)="isExpanded = true" (mouseleave)="isExpanded = false">
     @for (item of menuItems; track item.label) {
       <a
         class="sidebar-item"
+        *ngIf="item.route; else actionLink"
         [routerLink]="item.route"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -12,12 +14,22 @@
           <span class="label">{{ item.label }}</span>
         }
       </a>
+
+      <ng-template #actionLink>
+        <a class="sidebar-item" (click)="item.action && item.action()">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          @if (isExpanded) {
+            <span class="label">{{ item.label }}</span>
+          }
+        </a>
+      </ng-template>
     }
   </div>
 
+  <!-- Main content -->
   <div class="main">
     <mat-toolbar color="primary" class="top-toolbar">
-      <span>Personal Finance Manager</span>
+      <span>Personal Finance Managment</span>
     </mat-toolbar>
     <div class="main-content">
       <router-outlet></router-outlet>

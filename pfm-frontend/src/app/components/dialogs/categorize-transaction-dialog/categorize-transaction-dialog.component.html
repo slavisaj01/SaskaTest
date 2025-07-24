@@ -8,27 +8,32 @@
     <mat-form-field appearance="fill" class="styled-field full-width">
       <mat-label>Choose category</mat-label>
       <mat-select
-        [panelClass]="'category-select-panel'"
         [(ngModel)]="selectedCategory"
+        [panelClass]="'category-select-panel'"
         (selectionChange)="onCategoryChange()">
-        <mat-option
-          *ngFor="let cat of parentCategories"
-          class="category-select-option"
-          [value]="cat">
-          {{ cat.name }}
-        </mat-option>
+        @for (cat of parentCategories; track cat.code) {
+          <mat-option
+            [value]="cat"
+            class="category-select-option">
+            {{ cat.name }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
     <!-- Subkategorija -->
-    <mat-form-field appearance="fill" class="full-width styled-field">
+    <mat-form-field appearance="fill" class="styled-field full-width">
       <mat-label>Choose subcategory (optional)</mat-label>
       <mat-select
         [(ngModel)]="selectedSubcategory"
         [disabled]="subcategories.length === 0"
-        panelClass="category-select-panel">
+        [panelClass]="'category-select-panel'">
         @for (sub of subcategories; track sub.code) {
-          <mat-option class="category-select-option" [value]="sub.name">{{ sub.name }}</mat-option>
+          <mat-option
+            [value]="sub.name"
+            class="category-select-option">
+            {{ sub.name }}
+          </mat-option>
         }
       </mat-select>
     </mat-form-field>

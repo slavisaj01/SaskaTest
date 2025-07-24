@@ -1,7 +1,7 @@
 @use '../../../../styles/variables.scss' as *;
 
 .dialog-container {
-  background-color: #2a2a2a;
+  background-color: rgba(26, 110, 221, 0.2); 
   padding: 0 $spacing-unit * 3 $spacing-unit * 4;
   color: $text-color !important;
   font-family: $font-family;
@@ -11,7 +11,7 @@
   h2 {
     font-weight: 700;
     font-size: 1.8rem;
-    color: white !important;
+    color: #0f111a !important;
     text-align: center;
     margin-bottom: $spacing-unit * 2;
   }
@@ -60,7 +60,7 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-unit;
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(21, 23, 68, 0.245);
     border-radius: 12px;
     padding: $spacing-unit * 1.5;
     margin-bottom: $spacing-unit * 2;
@@ -148,6 +148,10 @@
     button[mat-icon-button] {
       align-self: center;
       margin-left: $spacing-unit;
+      &:hover {
+        color: $primary-color;
+        background-color: transparent !important;
+      }
     }
   }
 
@@ -208,25 +212,13 @@
 
 // === Dropdown panel & options ===
 .category-select-panel {
-  background-color: #0f111a !important;
+  background-color: #12203d!important;
   color: $text-color !important;
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   padding: 0;
   max-height: 250px;
 
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $muted-text-color;
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
 }
 
 .category-select-option {
@@ -237,12 +229,12 @@
   color: $text-color !important;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.05) !important;
+     background-color: rgba(255, 255, 255, 0.08) !important;
   }
 
   &.mat-mdc-selected {
-    background-color: rgba($primary-color, 0.2) !important;
-    color: $primary-color !important;
+    background-color: rgba($primary-color, 0.4) !important;
+    color: white !important;
   }
 }
 
@@ -253,10 +245,6 @@
 
 .mat-mdc-dialog-surface{
   border-radius: 29px;
-}
-.mat-mdc-form-field-focus-overlay{
-   background-color: #121212 !important;
-   color: $text-color !important;
 }
 
 .mat-mdc-input-element{
@@ -273,4 +261,12 @@
 
 .mat-mdc-dialog-content.mdc-dialog__content{
   padding: 4px;
+}
+
+.mat-mdc-form-field.styled-field{
+  background-color: #12203df4;
+}
+
+div.mat-mdc-select-panel{
+  max-height: 250px;
 }
