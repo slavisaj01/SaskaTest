@@ -131,10 +131,10 @@ export class SplitTransactionDialogComponent implements OnInit {
       if (!selectedCode) return null;
 
       return {
-        catcode: selectedCode,
+        ['cat-code']: selectedCode,
         amount: split.amount
       };
-    }).filter(Boolean); // filtriraj sve koje su null
+    }).filter(Boolean); 
 
     this.dialogRef.close(splitsToSend);
   }

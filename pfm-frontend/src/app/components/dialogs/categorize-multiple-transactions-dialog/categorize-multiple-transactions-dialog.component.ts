@@ -29,7 +29,7 @@ export class CategorizeMultipleTransactionsDialogComponent implements OnInit {
   subcategories: Category[] = [];
 
   selectedCategory: Category | null = null;
-  selectedSubcategory: string = '';
+  selectedSubcategory: Category | null = null;
 
   constructor(
     private dialogRef: MatDialogRef<CategorizeMultipleTransactionsDialogComponent>,
@@ -49,12 +49,12 @@ export class CategorizeMultipleTransactionsDialogComponent implements OnInit {
       this.subcategories = this.allCategories.filter(
         (cat) => cat.parentCode === this.selectedCategory!.code
       );
-      if (!this.subcategories.find(s => s.name === this.selectedSubcategory)) {
-        this.selectedSubcategory = '';
+      if (!this.subcategories.find(s => s.code === this.selectedSubcategory?.code)) {
+        this.selectedSubcategory = null;
       }
     } else {
       this.subcategories = [];
-      this.selectedSubcategory = '';
+      this.selectedSubcategory = null;
     }
   }
 
@@ -62,10 +62,25 @@ export class CategorizeMultipleTransactionsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onApply(): void {
-    this.dialogRef.close({
-      category: this.selectedCategory?.name || '',
-      subcategory: this.selectedSubcategory
-    });
-  }
+  // onApply(): void {
+  //   this.dialogRef.close({
+  //     category: this.selectedCategory?.name || '',
+  //     subcategory: this.selectedSubcategory
+  //   });
+  // }
+    onApply(): void {
+      let catcode = '';
+
+      if (this.selectedSubcategory) {
+        // Ako je izabrana podkategorija, nju šaljemo
+        catcode = this.selectedSubcategory.code;
+      } else if (this.selectedCategory) {
+        // Ako nije, šaljemo kategoriju
+        catcode = this.selectedCategory.code;
+      }
+
+      console.log('Finalni catcode:', catcode);
+      this.dialogRef.close({ catcode });
+    }
 }
+

@@ -10,7 +10,7 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<any[]> {
-  return this.http.get<any[]>('http://localhost:3000/categories').pipe(
+  return this.http.get<any[]>('https://localhost:7138/categories').pipe(
      map((data) =>
       data.map((cat) => ({
         code: cat.code,

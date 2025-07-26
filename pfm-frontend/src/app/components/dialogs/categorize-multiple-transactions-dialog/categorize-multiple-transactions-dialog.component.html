@@ -19,7 +19,7 @@
     <mat-label>Choose subcategory (optional)</mat-label>
     <mat-select panelClass="category-select-panel" [(ngModel)]="selectedSubcategory" [disabled]="subcategories.length === 0">
       @for (sub of subcategories; track sub.code) {
-        <mat-option class="category-select-option" [value]="sub.name">{{ sub.name }}</mat-option>
+        <mat-option class="category-select-option" [value]="sub">{{ sub.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

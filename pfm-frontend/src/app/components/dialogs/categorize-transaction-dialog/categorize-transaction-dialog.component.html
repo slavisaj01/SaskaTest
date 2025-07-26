@@ -30,7 +30,7 @@
         [panelClass]="'category-select-panel'">
         @for (sub of subcategories; track sub.code) {
           <mat-option
-            [value]="sub.name"
+            [value]="sub"
             class="category-select-option">
             {{ sub.name }}
           </mat-option>

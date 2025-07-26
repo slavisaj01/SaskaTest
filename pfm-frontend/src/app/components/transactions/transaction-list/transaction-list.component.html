@@ -155,7 +155,9 @@
           @if (!t.category) {
             <button class="btn btn-secondary" (click)="openCategorizeDialog(t)">+ Add category</button>
           } @else {
-            <button class="btn btn-primary" (click)="openCategorizeDialog(t)">{{ t.category }}</button>
+            <button class="btn btn-primary" (click)="openCategorizeDialog(t)">
+              {{ getMainCategoryLabel(t.category || t.subcategory) }}
+            </button>
           }
         </td>
       </ng-container>
@@ -221,7 +223,7 @@
         </button>
       }
 
-      @for (page of visiblePageNumbers; track page) {
+      @for (page of visiblePageNumbers; track $index) {
         @if (page === '...') {
           <button class="ellipsis" disabled>...</button>
         } @else {

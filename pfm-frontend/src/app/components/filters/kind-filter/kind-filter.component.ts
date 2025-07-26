@@ -38,8 +38,14 @@ export class KindFilterComponent {
     return this.kindLabels[kind] || kind;
   }
 
-  onSelectionChange(kind: string) {
-    this.kindSelected.emit(kind);
+  getCodeFromLabel(label: string): string {
+    const entry = Object.entries(this.kindLabels).find(([code, lbl]) => lbl === label);
+    return entry ? entry[0] : label; 
+  }
+
+  onSelectionChange(selectedLabel: string) {
+    const code = this.getCodeFromLabel(selectedLabel);
+    this.kindSelected.emit(code);
   }
 }
 
