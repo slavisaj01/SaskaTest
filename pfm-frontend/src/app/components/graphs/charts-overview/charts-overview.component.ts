@@ -30,6 +30,9 @@ export class ChartsOverviewComponent {
   @ViewChild(TreemapGraphComponent) treemapComponent?: TreemapGraphComponent;
   @ViewChild(PieChartGraphComponent) pieChartComponent?: PieChartGraphComponent;
 
+  @Input() categories: { code: string; name: string; parentCode?: string |null }[] = [];
+
+
   showCards = false;
   selectedChart: string = 'treemap'; // default
   isMobile: boolean = false;

@@ -61,7 +61,9 @@
       @switch (selectedChart) {
         @case ('treemap') {
           @if (hasDataToDisplay) {
-            <app-treemap-graph [transactions]="transactions" />
+            <app-treemap-graph [transactions]="transactions"
+            [categories]="categories"
+            />
           } @else {
             <div class="empty-state">
               <img src="../../../../assets/group2.png" alt="No data" />

@@ -5,51 +5,43 @@ import { EChartsOption } from 'echarts/types/dist/shared';
 import { groupBy, sumBy } from 'lodash';
 import type { ECharts } from 'echarts/core';
 
-
 @Component({
   selector: 'app-treemap-graph',
   imports: [NgxEchartsModule],
   templateUrl: './treemap-graph.component.html',
   styleUrl: './treemap-graph.component.scss',
+  standalone: true
 })
 export class TreemapGraphComponent {
   @Input() transactions: Transaction[] = [];
+
+  // ✅ NOVO: glavne i podkategorije koje stižu iz backend-a
+  @Input() categories: { code: string; name: string; parentCode?: string | null }[] = [];
+
   chartOptions: EChartsOption = {};
-
-  private baseColors: string[] = [
-    '#3D58ED', // Royal Blue
-    '#9B51E0', // Purple
-    '#F299CA', // Light Pink
-    '#2F80ED', // Blue
-    '#56CCF2', // Sky Blue
-    '#EB5757', // Red
-    '#F2C94C', // Yellow
-    '#6FCF97', // Green
-    '#BB6BD9', // Soft Purple
-    '#8A8A8A', // Telegrey
-    '#333333', // Dark Grey
-    '#D980FA', // Lavender
-    '#F8C471', // Light Orange
-    '#B2BABB', // Soft Grey
-    '#AED6F1', // Light Blue
-    '#D7BDE2', // Lilac
-    '#F5B7B1', // Blush
-    '#CACFD2', // Light Gray
-    '#F1948A', // Coral
-    '#A569BD', // Grape Purple
-  ];
-
   public echartsInstance?: ECharts;
 
-  onChartInit(instance: ECharts): void {
-    this.echartsInstance = instance;
-  }
-
+  private baseColors: string[] = [
+    '#3D58ED', '#9B51E0', '#F299CA', '#2F80ED', '#56CCF2', '#EB5757',
+    '#F2C94C', '#6FCF97', '#BB6BD9', '#8A8A8A', '#333333', '#D980FA',
+    '#F8C471', '#B2BABB', '#AED6F1', '#D7BDE2', '#F5B7B1', '#CACFD2',
+    '#F1948A', '#A569BD',
+  ];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions'] && this.transactions) {
       this.updateChart(this.transactions);
     }
+  }
+
+  onChartInit(instance: ECharts): void {
+    this.echartsInstance = instance;
+  }
+
+  // ✅ Helper za prikaz imena glavne kategorije po cat-code
+  getCategoryName(code: string): string {
+    const category = this.categories.find(c => c.code === code && !c.parentCode);
+    return category?.name ?? code;
   }
 
   updateChart(transactions: Transaction[]): void {
@@ -75,7 +67,7 @@ export class TreemapGraphComponent {
       }));
 
       return {
-        name: category,
+        name: this.getCategoryName(category), // ✅ Ovde prikazuje ime, ne kod
         value: sumBy(txns, 'amount'),
         children,
         itemStyle: {
@@ -89,61 +81,58 @@ export class TreemapGraphComponent {
         formatter: (info: any) => `${info.name}: ${info.value.toFixed(2)} RSD`,
       },
       series: [
-      {
-        type: 'treemap',
-        data,
-        leafDepth: 1,
-        roam: false,
-        visibleMin: 0,
-        label: {
-          show: true,
-          formatter: (params: any) => `${params.name}\n${params.value.toFixed(2)} RSD`,
-          position: 'inside',
-          color: '#fff',
-          fontSize: 12,
-        },
-        labelLayout: {
-          hideOverlap: false,
-        },
-        breadcrumb: {
-          show: true,
-          top: 0, 
-          itemStyle: {
-            color: '#3D58ED',
-            borderColor: '#3D58ED',
-            borderWidth: 1,
+        {
+          type: 'treemap',
+          data,
+          leafDepth: 1,
+          roam: false,
+          visibleMin: 0,
+          label: {
+            show: true,
+            formatter: (params: any) => `${params.name}\n${params.value.toFixed(2)} RSD`,
+            position: 'inside',
+            color: '#fff',
+            fontSize: 12,
           },
-          emphasis: {
+          labelLayout: { hideOverlap: false },
+          breadcrumb: {
+            show: true,
+            top: 0,
             itemStyle: {
               color: '#3D58ED',
               borderColor: '#3D58ED',
+              borderWidth: 1,
+            },
+            emphasis: {
+              itemStyle: {
+                color: '#3D58ED',
+                borderColor: '#3D58ED',
+              },
             },
           },
+          nodeClick: 'zoomToNode',
+          animation: false,
+          animationDuration: 0,
+          animationDurationUpdate: 0,
+          animationEasing: 'linear',
+          animationEasingUpdate: 'linear',
+          levels: [
+            {
+              itemStyle: {
+                borderColor: '#1a1a1a',
+                borderWidth: 2,
+                gapWidth: 3,
+              },
+            },
+            {
+              itemStyle: {
+                gapWidth: 2,
+                borderColorSaturation: 0.6,
+              },
+            },
+          ],
         },
-        nodeClick: 'zoomToNode', 
-        animation: false,
-        animationDuration: 0,
-        animationDurationUpdate: 0,
-        animationEasing: 'linear',
-        animationEasingUpdate: 'linear',
-        levels: [
-          {
-            itemStyle: {
-              borderColor: '#1a1a1a',
-              borderWidth: 2,
-              gapWidth: 3,
-            },
-          },
-          {
-            itemStyle: {
-              gapWidth: 2,
-              borderColorSaturation: 0.6,
-            },
-          },
-        ],
-      },
-    ]
-
+      ],
     };
   }
 
@@ -159,6 +148,4 @@ export class TreemapGraphComponent {
 
     return `rgb(${r},${g},${b})`;
   }
-
-
 }
