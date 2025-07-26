@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -46,5 +46,24 @@ export class AppComponent {
 
   toggleCardsInCharts() {
     this.chartsService.toggleCards(); 
+  }
+
+  isMobile = false;
+  sidebarVisible = false;
+
+  ngOnInit() {
+    this.checkScreenWidth();
+    window.addEventListener('resize', () => this.checkScreenWidth());
+  }
+
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth <= 768;
+    if (!this.isMobile) {
+      this.sidebarVisible = true; 
+    }
+  }
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
   }
 }

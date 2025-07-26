@@ -55,7 +55,7 @@ import { ViewEncapsulation } from '@angular/core';
 })
 export class TransactionListComponent implements OnInit {
   @ViewChild('filterDrawer') filterDrawer!: MatDrawer;
-
+  
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
   transactionsCategories: Category[] = [];
@@ -99,6 +99,8 @@ export class TransactionListComponent implements OnInit {
       this.transactionsCategories = categories;
     });
   }
+
+  
 
   // -------------------------
   // FILTERI

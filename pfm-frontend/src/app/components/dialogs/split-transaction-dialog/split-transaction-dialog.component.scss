@@ -270,3 +270,126 @@
 div.mat-mdc-select-panel{
   max-height: 250px;
 }
+
+@media (max-width: 480px) {
+  .dialog-container {
+    padding: $spacing-unit * 2;
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: $spacing-unit * 1.5;
+    }
+
+    .dialog-description {
+      font-size: 13px;
+      margin-bottom: $spacing-unit * 1.2;
+    }
+
+    .split-amount-info {
+      font-size: 13px;
+      margin-bottom: $spacing-unit * 1.5;
+    }
+
+    .split-dialog-content {
+      max-height: 50vh;
+    }
+
+    .split-form-group {
+      padding: $spacing-unit;
+      gap: $spacing-unit;
+
+      .styled-field {
+        height: 44px;
+
+        .mat-mdc-select-value,
+        input.mat-input-element {
+          font-size: 13px;
+        }
+
+        .mdc-floating-label {
+          font-size: 12px;
+        }
+
+        .mat-mdc-text-field-wrapper {
+          padding: 0 6px;
+        }
+      }
+
+      button[mat-icon-button] {
+        margin-left: auto;
+      }
+    }
+
+    .add-split-link {
+      font-size: 13px;
+      margin-bottom: $spacing-unit;
+    }
+
+    .dialog-actions {
+      margin-top: $spacing-unit * 2;
+
+      .btn-primary,
+      .btn-secondary {
+        height: 36px;
+        font-size: 13px;
+        width: auto;
+        padding: 0 $spacing-unit * 2;
+      }
+    }
+  }
+
+  .mat-mdc-dialog-container-with-actions {
+    border-radius: 20px;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 18px;
+  }
+
+  .styled-field {
+  height: 44px !important;
+
+  .mat-mdc-text-field-wrapper {
+    padding: 0 6px !important;
+    height: 44px !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    height: 44px !important;
+  }
+
+  .mat-mdc-select-value,
+  input.mat-input-element {
+    height: 44px !important;
+    font-size: 13px !important;
+    padding: 0 6px !important;
+  }
+
+  .mdc-floating-label {
+    font-size: 12px !important;
+  }
+
+  .mdc-floating-label--float-above {
+    font-size: 11px !important;
+  }
+
+  input::placeholder {
+    font-size: 12px !important;
+  }
+}
+.split-form-group {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+    .styled-field {
+      width: 100%;
+      max-width: 240px; 
+      margin: 0 auto; 
+    }
+
+    button[mat-icon-button] {
+      align-self: center;
+      margin-top: 8px;
+    }
+  }
+}

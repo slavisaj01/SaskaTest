@@ -26,18 +26,14 @@
 
     <div class="drawer-actions">
       <div class="filters-footer">
-        <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
-        <button class="btn btn-secondary" (click)="onApplyAndClose()">Filter Transactions</button>
+        <button class="btn btn-primary" (click)="onApplyAndClose()">Filter Transactions</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Clear Filters</button>
       </div>
-
     </div>
   </mat-drawer>
 
-
-
   <!-- GLAVNI SADRŽAJ -->
   <div class="drawer-content">
-    <!-- GRAFIČKI PRIKAZ -->
     @if (showChartView) {
       <app-charts-overview
         [transactions]="filteredTransactions"
@@ -45,7 +41,6 @@
       </app-charts-overview>
     }
 
-    <!-- NASLOV I TOGGLE -->
     <div class="header-row">
       <h2>Transaction History</h2>
       <mat-slide-toggle
@@ -56,11 +51,14 @@
       </mat-slide-toggle>
 
       <div class="search-filter-wrapper">
-        <input type="text" placeholder="Search..." />
-       <button mat-stroked-button class="filter-btn" (click)="toggleKindFilter()">
-        <mat-icon>filter_alt</mat-icon>
-        <span class="fil">Filters</span>
-      </button>
+        <input type="text" placeholder="Search..." class="search-field"/>
+        <button mat-stroked-button class="filter-btn" (click)="toggleKindFilter()">
+          <mat-icon>filter_alt</mat-icon>
+          <span class="fil">Filters</span>
+        </button>
+        <button mat-icon-button class="burger-menu-btn" (click)="toggleKindFilter()" matTooltip="Filters">
+          <mat-icon>filter_alt</mat-icon>
+        </button>
       </div>
     </div>
 
@@ -87,7 +85,8 @@
     </div>
 
     <!-- TABELA TRANSAKCIJA -->
-    <table mat-table [dataSource]="paginatedTransactions" class="styled-table">
+    <div class="table-scroll-wrapper">
+      <table mat-table [dataSource]="paginatedTransactions" class="styled-table">
 
       @if (isMultiSelectMode) {
         <ng-container matColumnDef="select">
@@ -212,6 +211,7 @@
         }
       </ng-container>
     </table>
+    </div>
 
     <!-- PAGINACIJA -->
     <div class="pagination">

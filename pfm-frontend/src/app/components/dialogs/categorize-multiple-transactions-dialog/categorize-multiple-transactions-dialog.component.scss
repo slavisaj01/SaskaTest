@@ -14,6 +14,7 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    overflow: hidden;
   }
   h2 {
   font-weight: 700;
@@ -30,7 +31,8 @@
   }
 
   .styled-field {
-  flex: 1 1 30%;
+  flex: none;
+  width: 100%;
   min-width: 140px;
   height: 50px;
   margin-bottom: $spacing-unit * 2; 
@@ -213,4 +215,57 @@
 
 div.mat-mdc-select-panel{
   max-height: 250px;
+}
+
+@media (max-width: 480px) {
+  .dialog-container {
+    padding: $spacing-unit * 1.5;
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: $spacing-unit * 1.5;
+    }
+
+    .dialog-description {
+      font-size: 13px;
+      margin-bottom: $spacing-unit * 1.5;
+    }
+
+    .styled-field {
+      height: 44px;
+      margin-bottom: $spacing-unit * 1.5;
+
+      .mat-mdc-select-value,
+      input.mat-input-element {
+        font-size: 13px;
+      }
+
+      .mdc-floating-label {
+        font-size: 12px;
+      }
+
+      .mat-mdc-text-field-wrapper {
+        padding: 0 6px;
+      }
+    }
+
+    .dialog-actions {
+      gap: $spacing-unit;
+
+      .btn-primary,
+      .btn-secondary {
+        font-size: 13px;
+        padding: 0 $spacing-unit * 1.5;
+        height: 36px;
+      }
+    }
+  }
+
+  .mat-mdc-dialog-container-with-actions {
+    border-radius: 20px;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 18px;
+  }
 }

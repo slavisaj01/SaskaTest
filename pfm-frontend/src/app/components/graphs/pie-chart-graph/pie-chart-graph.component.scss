@@ -1,5 +1,34 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .chart-container {
   width: 100%;
+  max-width: 600px;
   height: 400px;
-  background-color: transparent;
+  position: relative;
+}
+
+.back-button-wrapper {
+  margin-top: 16px;
+  text-align: center;
+
+  .back-button {
+    color: #3D58ED;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(61, 88, 237, 0.1);
+    }
+  }
 }

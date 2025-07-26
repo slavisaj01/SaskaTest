@@ -1,2 +1,6 @@
-<div echarts [options]="chartOptions" class="chart-container"></div>
-
+<div
+  echarts
+  [options]="chartOptions"
+  class="chart-container"
+  (chartInit)="onChartInit($event)">
+</div>

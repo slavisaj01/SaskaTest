@@ -14,6 +14,7 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    overflow: hidden;
   }
   h2 {
   font-weight: 700;
@@ -30,10 +31,12 @@
   }
 
   .styled-field {
-  flex: 1 1 30%;
+  width: 100%;
+  flex: none;
   min-width: 140px;
   height: 50px;
   margin-bottom: $spacing-unit * 2; 
+
   .mat-mdc-form-field {
     width: 100%;
     height: 100%;
@@ -137,7 +140,8 @@
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
+  scrollbar-width: none; 
 }
 
 .category-select-option {
@@ -213,4 +217,51 @@
 
 div.mat-mdc-select-panel{
   max-height: 250px;
+}
+
+@media (max-width: 480px) {
+  .dialog-container {
+    padding: $spacing-unit * 1.5;
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    .dialog-description {
+      font-size: 14px;
+    }
+
+    .styled-field {
+      height: 44px;
+      .mat-mdc-select-value,
+      input.mat-input-element {
+        font-size: 13px;
+      }
+
+      .mdc-floating-label {
+        font-size: 12px;
+      }
+
+      .mat-mdc-text-field-wrapper {
+        padding: 0 6px;
+      }
+    }
+
+    .dialog-actions {
+      gap: $spacing-unit;
+      .btn-primary,
+      .btn-secondary {
+        font-size: 13px;
+        padding: 0 $spacing-unit * 1.5;
+        height: 36px;
+      }
+    }
+  }
+
+  .mat-mdc-dialog-container-with-actions {
+    border-radius: 20px;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 18px;
+  }
 }

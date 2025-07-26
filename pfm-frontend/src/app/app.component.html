@@ -1,36 +1,56 @@
 <div class="layout">
   <!-- Sidebar -->
-  <div class="sidebar" [class.expanded]="isExpanded" (mouseenter)="isExpanded = true" (mouseleave)="isExpanded = false">
+  <div
+    #sidebarRef
+    class="sidebar"
+    [class.expanded]="!isMobile && isExpanded"
+    [class.mobile-visible]="isMobile && sidebarVisible"
+    (mouseenter)="!isMobile && (isExpanded = true)"
+    (mouseleave)="!isMobile && (isExpanded = false)"
+  >
     @for (item of menuItems; track item.label) {
-      <a
-        class="sidebar-item"
-        *ngIf="item.route; else actionLink"
-        [routerLink]="item.route"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <mat-icon>{{ item.icon }}</mat-icon>
-        @if (isExpanded) {
-          <span class="label">{{ item.label }}</span>
-        }
-      </a>
-
-      <ng-template #actionLink>
-        <a class="sidebar-item" (click)="item.action && item.action()">
+      @if (item.route) {
+        <a
+          class="sidebar-item"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="isMobile && toggleSidebar()"
+        >
           <mat-icon>{{ item.icon }}</mat-icon>
-          @if (isExpanded) {
+          @if (isExpanded || isMobile) {
             <span class="label">{{ item.label }}</span>
           }
         </a>
-      </ng-template>
+      } @else {
+        <a
+          class="sidebar-item"
+          (click)="item.action && item.action(); isMobile && toggleSidebar()"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          @if (isExpanded || isMobile) {
+            <span class="label">{{ item.label }}</span>
+          }
+        </a>
+      }
     }
   </div>
 
   <!-- Main content -->
   <div class="main">
     <mat-toolbar color="primary" class="top-toolbar">
-      <span>Personal Finance Managment</span>
+      @if (isMobile) {
+        <button class="burger-toggle" (click)="toggleSidebar()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      <span>Personal Finance Management</span>
     </mat-toolbar>
+
+    @if (isMobile && sidebarVisible) {
+      <div class="sidebar-backdrop" (click)="toggleSidebar()"></div>
+    }
+
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>

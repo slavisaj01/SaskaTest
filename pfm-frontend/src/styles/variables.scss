@@ -128,3 +128,8 @@ mat-chip {
 .mat-typography{
  margin: 0;
 }
+
+$breakpoint-xs: 480px;    // telefoni
+$breakpoint-sm: 768px;    // tableti u portrait
+$breakpoint-md: 1024px;   // tableti u landscape
+$breakpoint-lg: 1200px;   // desktop

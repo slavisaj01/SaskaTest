@@ -1,5 +1,5 @@
 <div class="charts-layout">
-   @if (showCards) {
+  @if (showCards) {
     <div class="cards-column">
       @for (card of cards; track card.id) {
         <div class="card-box">
@@ -37,20 +37,24 @@
       }
     </div>
   }
+
   <!-- Desna kolona sa grafikonom -->
   <div class="chart-column">
-    <div class="chart-top-controls">
-      <mat-select
-        [(value)]="selectedChart"
-        disableRipple
-        panelClass="chart-type-panel"
-        class="chart-type-button"
-      >
-        @for (type of chartTypes; track type.value) {
-          <mat-option [value]="type.value">{{ type.label }}</mat-option>
-        }
-      </mat-select>
-    </div>
+    <!-- Prikaz dugmeta za izbor grafikona samo ako nije mobilni prikaz -->
+    @if (!isMobile) {
+      <div class="chart-top-controls">
+        <mat-select
+          [(value)]="selectedChart"
+          disableRipple
+          panelClass="chart-type-panel"
+          class="chart-type-button"
+        >
+          @for (type of chartTypes; track type.value) {
+            <mat-option [value]="type.value">{{ type.label }}</mat-option>
+          }
+        </mat-select>
+      </div>
+    }
 
     <!-- Prikaz grafikona -->
     <div class="chart-content">

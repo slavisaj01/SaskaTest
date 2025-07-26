@@ -26,3 +26,22 @@ body {
   backdrop-filter: blur(2px); 
   -webkit-backdrop-filter: blur(2px); 
 }
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #000; 
+}
+
+.layout {
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
