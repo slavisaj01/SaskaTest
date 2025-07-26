@@ -46,8 +46,6 @@ export class CategorizeTransactionDialogComponent implements OnInit {
 
       this.selectedCategory = this.allCategories.find(c => c.code === selectedCatCode) || null;
       this.selectedSubcategory = this.allCategories.find(c => c.code === selectedSubCode) || null;
-      console.log(this.selectedCategory);
-      console.log(this.selectedSubcategory);
       this.onCategoryChange();
     });
   }

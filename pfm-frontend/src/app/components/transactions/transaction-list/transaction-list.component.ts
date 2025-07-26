@@ -100,11 +100,14 @@ export class TransactionListComponent implements OnInit {
       'Reversal', 'Adjustment', 'Loan Disbursement', 'Loan Repayment',
       'FX Exchange', 'Account Opening', 'Account Closing', 'Split Payment', 'Salary'
     ];
-
-    this.fetchTransactions();
+    
     this.categoryService.getCategories().subscribe((categories) => {
       this.transactionsCategories = categories;
+
+      // sad kad su kategorije sigurno stigle, učitaj transakcije
+      this.fetchTransactions();
     });
+
   }
 
   fetchTransactions(): void {
@@ -120,7 +123,7 @@ export class TransactionListComponent implements OnInit {
       endDate: endDateStr
     }).subscribe((res) => {
       this.transactions = res.items;
-      this.filteredTransactions = res.items; // koristi isto za grafikone i multi-selekt
+      this.filteredTransactions = res.items; 
       this.totalItemCount = res.totalCount;
     });
   }
