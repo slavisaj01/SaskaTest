@@ -37,6 +37,7 @@
     @if (showChartView) {
       <app-charts-overview
         [transactions]="filteredTransactions"
+        [categories]="transactionsCategories"
         @fadeSlide>
       </app-charts-overview>
     }
@@ -197,8 +198,8 @@
                       <mat-icon class="split-dot">chevron_right</mat-icon>
                       <div class="split-info">
                         <p>
-                          <strong>{{ getSplitLabel(split.catcode).labelType }}:</strong>
-                          {{ getSplitLabel(split.catcode).label }}
+                          <strong>{{ getSplitLabel(split['cat-code']).labelType }}:</strong>
+                          {{ getSplitLabel(split['cat-code']).label }}
                         </p>
                         <p>
                           <strong>Amount:</strong> {{ split.amount | number: '1.2-2' }} {{ row.currency }}
